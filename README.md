@@ -3,13 +3,13 @@ This is an attempt to fluxify one of the most iconic addon for IndustrialCraft 2
 
 Plans:
 
-## Armors: 
+## Armors: 1/2 DONE!
     Advanced Nano Chest, Advanced Quant Chest;
-## Energy Packs: 
+## Energy Packs: DONE!
     BatPack, Lappack, Advanced Lappack, Ultimate Lappack;
-## Jetpacks: 
+## Jetpacks: DONE!
     Electric Jetpack, Advanced Electric Jetpack;
-## Tools: 
+## Tools: DONE!
     Mining Drill, Diamond Drill, Advanced Drill, OmniTool;
 
 ## Note
