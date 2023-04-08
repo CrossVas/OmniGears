@@ -38,6 +38,7 @@ Plans:
   - abilities: fly, hover mode, boost mode;
   - capacity: 4MRF;
 - Tools:
+
 -[X] Mining Drill;
 -[X] Diamond Drill;
 -[X] Advanced Diamond Drill;
