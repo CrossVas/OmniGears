@@ -1,0 +1,55 @@
+{
+  "itemGroup.omnigears": "Omni Gears",
+  "key.mode_switch.name": "Mode Switch Key",
+  "key.toggle.name": "Fly Toggle Key",
+  "key.alt.name": "Alt Key",
+  "key.boost.name": "Boost Key",
+
+  "item.omnigears.cooling_core": "Cooling Core",
+  "item.omnigears.gravi_engine": "Gravitational Engine",
+  "item.omnigears.magnetron": "Magnetron",
+  "item.omnigears.superconductor": "Superconductor",
+  "item.omnigears.superconductor_cover": "Superconductor Cover",
+  "item.omnigears.omni_core": "Omni Core",
+  "item.omnigears.drill": "Mining Drill",
+  "item.omnigears.diamond_drill": "Diamond Drill",
+  "item.omnigears.advanced_drill": "Advanced Diamond Drill",
+  "item.omnigears.chainsaw": "Chainsaw",
+  "item.omnigears.advanced_chainsaw": "Advanced Chainsaw",
+  "item.omnigears.omnitool": "OmniTool",
+  "item.omnigears.bat_pack": "BatPack",
+  "item.omnigears.lappack": "Lappack",
+  "item.omnigears.advanced_lappack": "Advanced Lappack",
+  "item.omnigears.ultimate_lappack": "Ultimate Lappack",
+  "item.omnigears.electric_jetpack": "Electric Jetpack",
+  "item.omnigears.advanced_jetpack": "Advanced Jetpack",
+  "item.omnigears.advanced_nano": "Advanced Nano Chestplate",
+
+  "message.text.mode": "Tool Mode: ",
+  "message.text.mode.eff": "Efficiency Mode: ",
+  "message.text.mode.mining": "Mining Mode: ",
+  "message.text.mode.shears": "Shears Mode: ",
+
+  "message.text.mode.big_holes": "Big Holes",
+  "message.text.mode.fine": "Fine",
+  "message.text.mode.fortune": "Fortune Mode",
+  "message.text.mode.low_power": "Low Power",
+  "message.text.mode.normal": "Normal",
+  "message.text.mode.silk": "Silk Touch Mode",
+  "message.text.mode.vein": "Vein",
+  "message.text.mode.vein_extended": "Vein Extended",
+  "message.text.no_energy": "Not enough energy for this operation! Please recharge your device!",
+
+  "message.text.on": "On",
+  "message.text.off": "Off",
+
+  "message.text.shutdown": "Warning! Your energy cell is depleted! Anti-Gravity Engine Off!",
+  "message.text.no_energy_boost": "Not enough energy to boost!",
+
+  "message.text.jetpack.engine": "Jetpack Engine: ",
+  "message.text.jetpack.hover": "Hover Mode: ",
+  "message.text.energy": "Energy Level: ",
+
+  "message.text.levitation": "Levitation: ",
+  "message.text.gravitation": "Anti-Gravity Engine: "
+}

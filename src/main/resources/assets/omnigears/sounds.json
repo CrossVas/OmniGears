@@ -1,0 +1,11 @@
+{
+  "jetpack_sound": {
+    "category": "entity",
+    "sounds": [
+      {
+        "name": "omnigears:jetpack_sound",
+        "pitch": 0.8
+      }
+    ]
+  }
+}

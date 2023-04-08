@@ -1,0 +1,6 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "omnigears:item/tools/advanced_chainsaw"
+  }
+}
