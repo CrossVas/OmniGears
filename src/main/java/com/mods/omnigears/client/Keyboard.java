@@ -3,6 +3,7 @@ package com.mods.omnigears.client;
 import com.mods.omnigears.Refs;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.KeyMapping;
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.settings.KeyConflictContext;
 import org.lwjgl.glfw.GLFW;
 
@@ -27,5 +28,13 @@ public class Keyboard {
 
     public static boolean isBoostKeyDown() {
         return BOOST_KEY.isDown();
+    }
+
+    public static boolean isJumpKeyDown() {
+        return Minecraft.getInstance().options.keyJump.isDown();
+    }
+
+    public static boolean isForwardKeyDown() {
+        return Minecraft.getInstance().options.keyUp.isDown();
     }
 }

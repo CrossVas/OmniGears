@@ -15,7 +15,6 @@ import java.util.function.Consumer;
 
 public class ItemAdvancedNanoChest extends ItemElectricJetpack {
 
-    public int energyForExtinguish = 200000;
     public int energyPerDamage = 3200;
 
     public ItemAdvancedNanoChest() {

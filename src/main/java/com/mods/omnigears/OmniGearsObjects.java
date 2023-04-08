@@ -2,6 +2,7 @@ package com.mods.omnigears;
 
 import com.mods.omnigears.items.ItemComponents;
 import com.mods.omnigears.items.armors.ItemAdvancedNanoChest;
+import com.mods.omnigears.items.armors.ItemAdvancedQuantChest;
 import com.mods.omnigears.items.armors.ItemBaseEnergyPack;
 import com.mods.omnigears.items.armors.ItemElectricJetpack;
 import com.mods.omnigears.items.tools.ItemDrill;
@@ -42,6 +43,7 @@ public class OmniGearsObjects {
         JETPACK = registerItem(new ItemElectricJetpack("electric_jetpack", 120000, 500, Rarity.COMMON, 28, false, false), "electric_jetpack");
         ADVANCED_JETPACK = registerItem(new ItemElectricJetpack("advanced_jetpack", 4000000, 5000, Rarity.UNCOMMON, 144, true, true), "advanced_jetpack");
         ADVANCED_NANO = registerItem(new ItemAdvancedNanoChest(), "advanced_nano");
+        ADVANCED_QUANT = registerItem(new ItemAdvancedQuantChest(), "advanced_quant");
 
         COOLING_CORE = registerItem(new ItemComponents(), "cooling_core");
         ENGINE_BOOSTER = registerItem(new ItemComponents(), "engine_booster");
