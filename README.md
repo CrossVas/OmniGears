@@ -38,13 +38,12 @@ Plans:
   - abilities: fly, hover mode, boost mode;
   - capacity: 4MRF;
 - Tools:
-
--[X] Mining Drill;
--[X] Diamond Drill;
--[X] Advanced Diamond Drill;
--[X] Chainsaw;
--[X] Advanced Chainsaw;
--[X] OmniTool (Vajra-like);
+  -[X] Mining Drill;
+  -[X] Diamond Drill;
+  -[X] Advanced Diamond Drill;
+  -[X] Chainsaw;
+  -[X] Advanced Chainsaw;
+  -[X] OmniTool (Vajra-like);
 
 ## Note
 All textures are used as a placeholder and are not final. 
