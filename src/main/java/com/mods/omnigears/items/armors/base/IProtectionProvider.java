@@ -1,10 +1,10 @@
 package com.mods.omnigears.items.armors.base;
 
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
 
 public interface IProtectionProvider {
 
-    int getStoredEnergy(ItemStack stack);
-    int getEnergyPerDamage();
-    int useEnergy(ItemStack stack, int amount, boolean simulate);
+    boolean provideProtection();
+
+    boolean isFullSet(Player player);
 }

@@ -20,7 +20,6 @@ public class OmniGears {
     public OmniGears() {
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(new JetpackClientHandler());
-        MinecraftForge.EVENT_BUS.register(new OmniArmorEventHandlers.OnHurtEvent());
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         bus.addListener(this::register);
         bus.addListener(this::registerKeys);

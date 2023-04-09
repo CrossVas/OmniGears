@@ -21,14 +21,13 @@ public class OmniGearsObjects {
     public static Item DRILL, DIAMOND_DRILL, ADVANCED_DRILL, CHAINSAW, ADVANCED_CHAINSAW, OMNITOOL;
 
     // Energy Packs
-    public static Item BATPACK, LAPPACK, ADVANCED_LAPPACK, ULTIMATE_LAPPACK;
+    public static Item ENERGY_PACK, LAZULI_PACK, ADVANCED_LAZULI_PACK, ULTIMATE_LAZULI_PACK;
 
     // Jetpacks
-
-    public static Item JETPACK, ADVANCED_JETPACK, ADVANCED_NANO, ADVANCED_QUANT;
+    public static Item JETPACK, ADVANCED_JETPACK, ADVANCED_JETPACK_CHEST, ADVANCED_OMNI_ARMOR;
 
     // Armor set
-    public static Item HANO_HELMET, NANO_CHEST, NANO_LEGS, NANO_BOOTS;
+    public static Item ADV_HELMET, ADV_CHEST, ADV_LEGS, ADV_BOOTS;
 
     public static void init() {
         DRILL = registerItem(new ItemDrill(), "drill");
@@ -37,19 +36,19 @@ public class OmniGearsObjects {
         CHAINSAW = registerItem(new ItemSaw(), "chainsaw");
         ADVANCED_CHAINSAW = registerItem(new ItemSaw.ItemAdvancedSaw(), "advanced_chainsaw");
         OMNITOOL = registerItem(new ItemOmni(), "omnitool");
-        BATPACK = registerItem(new ItemBaseEnergyPack("bat_pack", 240000, 1000, Rarity.COMMON), "bat_pack");
-        LAPPACK = registerItem(new ItemBaseEnergyPack("lappack", 2400000, 5000, Rarity.UNCOMMON), "lappack");
-        ADVANCED_LAPPACK = registerItem(new ItemBaseEnergyPack("advanced_lappack", 4000000, 2000, Rarity.UNCOMMON), "advanced_lappack");
-        ULTIMATE_LAPPACK = registerItem(new ItemBaseEnergyPack("ultimate_lappack", 40000000, 20000, Rarity.RARE), "ultimate_lappack");
+        ENERGY_PACK = registerItem(new ItemBaseEnergyPack("energy_pack", 240000, 1000, Rarity.COMMON), "energy_pack");
+        LAZULI_PACK = registerItem(new ItemBaseEnergyPack("lazuli_pack", 2400000, 5000, Rarity.UNCOMMON), "lazuli_pack");
+        ADVANCED_LAZULI_PACK = registerItem(new ItemBaseEnergyPack("advanced_lazuli_pack", 4000000, 2000, Rarity.UNCOMMON), "advanced_lazuli_pack");
+        ULTIMATE_LAZULI_PACK = registerItem(new ItemBaseEnergyPack("ultimate_lazuli_pack", 40000000, 20000, Rarity.RARE), "ultimate_lazuli_pack");
         JETPACK = registerItem(new ItemElectricJetpack("electric_jetpack", 120000, 500, Rarity.COMMON, 28, false, false), "electric_jetpack");
         ADVANCED_JETPACK = registerItem(new ItemElectricJetpack("advanced_jetpack", 4000000, 5000, Rarity.UNCOMMON, 144, true, true), "advanced_jetpack");
-        ADVANCED_NANO = registerItem(new ItemAdvancedNanoChest(), "advanced_nano");
-        ADVANCED_QUANT = registerItem(new ItemAdvancedQuantChest(), "advanced_quant");
+        ADVANCED_JETPACK_CHEST = registerItem(new ItemAdvancedJetpackChest(), "advanced_jetpack_chest");
+        ADVANCED_OMNI_ARMOR = registerItem(new ItemAdvancedOmniArmor(), "advanced_omniarmor");
 
-        HANO_HELMET = registerItem(new ItemNanoArmor("nano", EquipmentSlot.HEAD), "nano_helmet");
-        NANO_CHEST = registerItem(new ItemNanoArmor("nano", EquipmentSlot.CHEST), "nano_chest");
-        NANO_LEGS = registerItem(new ItemNanoArmor("nano", EquipmentSlot.LEGS), "nano_legs");
-        NANO_BOOTS = registerItem(new ItemNanoArmor("nano", EquipmentSlot.FEET), "nano_boots");
+        ADV_HELMET = registerItem(new ItemArmorAdvanced(EquipmentSlot.HEAD), "adv_helmet");
+        ADV_CHEST = registerItem(new ItemArmorAdvanced(EquipmentSlot.CHEST), "adv_chest");
+        ADV_LEGS = registerItem(new ItemArmorAdvanced(EquipmentSlot.LEGS), "adv_legs");
+        ADV_BOOTS = registerItem(new ItemArmorAdvanced(EquipmentSlot.FEET), "adv_boots");
 
         COOLING_CORE = registerItem(new ItemComponents(), "cooling_core");
         ENGINE_BOOSTER = registerItem(new ItemComponents(), "engine_booster");

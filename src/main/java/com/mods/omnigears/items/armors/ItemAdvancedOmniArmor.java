@@ -5,7 +5,7 @@ import com.google.common.collect.Multimap;
 import com.mods.omnigears.client.Keyboard;
 import com.mods.omnigears.items.armors.base.IProtectionProvider;
 import com.mods.omnigears.items.armors.base.ItemBaseElectricArmor;
-import com.mods.omnigears.utils.Helpers;
+import com.mods.omnigears.Helpers;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
@@ -22,7 +22,7 @@ import net.minecraft.world.level.Level;
 import java.util.UUID;
 import java.util.function.Consumer;
 
-public class ItemAdvancedQuantChest extends ItemBaseElectricArmor implements IProtectionProvider {
+public class ItemAdvancedOmniArmor extends ItemBaseElectricArmor implements IProtectionProvider {
 
     public boolean gravitation;
     public boolean levitation;
@@ -30,10 +30,9 @@ public class ItemAdvancedQuantChest extends ItemBaseElectricArmor implements IPr
     public static final String TAG_LEVITATION = "levitation";
     public static final String TICKER = "ticker";
 
-    public int energyPerDamage = 3600;
-
-    public ItemAdvancedQuantChest() {
-        super("advanced_quant", EquipmentSlot.CHEST, 40000000, 200000, Rarity.RARE);
+    public ItemAdvancedOmniArmor() {
+        super("advanced_omniarmor", EquipmentSlot.CHEST, 40000000, 200000, Rarity.RARE);
+        this.energyPerDamage = 2000;
     }
 
     @Override
@@ -42,18 +41,13 @@ public class ItemAdvancedQuantChest extends ItemBaseElectricArmor implements IPr
     }
 
     @Override
-    public int getStoredEnergy(ItemStack stack) {
-        return getEnergyStored(stack);
+    public boolean isFullSet(Player player) {
+        return true;
     }
 
     @Override
-    public int getEnergyPerDamage() {
-        return energyPerDamage;
-    }
-
-    @Override
-    public int useEnergy(ItemStack stack, int amount, boolean simulate) {
-        return extractEnergy(stack, amount, simulate);
+    public boolean provideProtection() {
+        return true;
     }
 
     @Override

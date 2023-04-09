@@ -2,7 +2,6 @@ package com.mods.omnigears.items.armors;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import com.mods.omnigears.items.armors.base.IProtectionProvider;
 import com.mods.omnigears.items.armors.base.ItemBaseElectricArmor;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -20,17 +19,18 @@ import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
+import java.util.Arrays;
 import java.util.UUID;
 
-public class ItemNanoArmor extends ItemBaseElectricArmor implements IProtectionProvider {
+public class ItemArmorAdvanced extends ItemBaseElectricArmor {
 
-    public int energyPerDamage = 3200;
+    public int energyPerDamage = 800;
     public EquipmentSlot slot;
     public byte ticker, tickRate = 20;
-    public int energyForExtinguish = 25000;
+    public int energyForExtinguish = 2500;
 
-    public ItemNanoArmor(String id, EquipmentSlot slot) {
-        super(id, slot, 400000, 5000, Rarity.UNCOMMON);
+    public ItemArmorAdvanced(EquipmentSlot slot) {
+        super("advanced", slot, 1000000, 5000, Rarity.UNCOMMON);
         this.slot = slot;
         MinecraftForge.EVENT_BUS.register(this);
     }
@@ -39,7 +39,7 @@ public class ItemNanoArmor extends ItemBaseElectricArmor implements IProtectionP
     public void onArmorTick(ItemStack stack, Level level, Player player) {
         if (!level.isClientSide()) {
             if (ticker++ % tickRate == 0) {
-                if (player.isOnFire() && hasFullSetNano(player)) {
+                if (player.isOnFire() && hasFullSetArmor(player)) {
                     if (hasEnergy(stack, this.energyForExtinguish)) {
                         for (int i = 0; i < player.getInventory().items.size(); i++) {
                             player.getInventory().getItem(i);
@@ -48,7 +48,7 @@ public class ItemNanoArmor extends ItemBaseElectricArmor implements IProtectionP
                                 if (player.getInventory().getItem(i).getCount() >= 1) {
                                     player.getInventory().getItem(i).shrink(1);
                                 }
-                                useEnergy(stack, this.energyForExtinguish, false);
+                                extractEnergy(stack, this.energyForExtinguish, false);
                                 player.clearFire();
                                 break;
                             }
@@ -57,21 +57,6 @@ public class ItemNanoArmor extends ItemBaseElectricArmor implements IProtectionP
                 }
             }
         }
-    }
-
-    @Override
-    public int getStoredEnergy(ItemStack stack) {
-        return getEnergyStored(stack);
-    }
-
-    @Override
-    public int getEnergyPerDamage() {
-        return energyPerDamage;
-    }
-
-    @Override
-    public int useEnergy(ItemStack stack, int amount, boolean simulate) {
-        return extractEnergy(stack, amount, simulate);
     }
 
     @Override
@@ -108,28 +93,38 @@ public class ItemNanoArmor extends ItemBaseElectricArmor implements IProtectionP
         return 0;
     }
 
-    public boolean hasFullSetNano(Player player) {
-        return player.getInventory().armor.get(0).getItem() instanceof ItemNanoArmor &&
-                player.getInventory().armor.get(1).getItem() instanceof ItemNanoArmor &&
-                player.getInventory().armor.get(2).getItem() instanceof ItemNanoArmor &&
-                player.getInventory().armor.get(3).getItem() instanceof ItemNanoArmor;
+    public boolean hasFullSetArmor(Player player) {
+        return Arrays.stream(player.getInventory().armor.toArray(new ItemStack[0])).allMatch(item -> item.getItem() instanceof ItemArmorAdvanced);
     }
 
+    @Override
+    public boolean isFullSet(Player player) {
+        return hasFullSetArmor(player);
+    }
+
+    @Override
+    public boolean provideProtection() {
+        return true;
+    }
+
+    // armor boots specific event handler
     @SubscribeEvent(priority = EventPriority.LOW)
     public void onFallEvent(LivingFallEvent e) {
         LivingEntity entity = e.getEntity();
         Level level = entity.level;
 
         if (!level.isClientSide()) {
-            ItemStack feetArmor = entity.getItemBySlot(EquipmentSlot.FEET);
-            if (feetArmor.getItem() instanceof ItemNanoArmor armor) {
+            if (entity instanceof Player player) {
+                ItemStack feetArmor = player.getItemBySlot(EquipmentSlot.FEET);
                 float fallDamage = e.getDistance(); // 100% of fall damage
-                if (fallDamage > 5) {
-                    fallDamage *= 0.25F; // 100% of fall damage from above 5
-                    int energy = (int) Math.min(fallDamage * armor.energyPerDamage, armor.getStoredEnergy(feetArmor));
-                    armor.useEnergy(feetArmor, energy, false);
-                    entity.hurt(DamageSource.FALL, fallDamage);
-                    e.setCanceled(true);
+                if (feetArmor.getItem() instanceof ItemArmorAdvanced) {
+                    if (fallDamage > 5) {
+                        fallDamage *= 0.25F;
+                        int energy = (int) Math.min(fallDamage * energyPerDamage, getEnergyStored(feetArmor));
+                        extractEnergy(feetArmor, energy, false);
+                        entity.hurt(DamageSource.FALL, fallDamage);
+                        e.setCanceled(true);
+                    }
                 }
             }
         }

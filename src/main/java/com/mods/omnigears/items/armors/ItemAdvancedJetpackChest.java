@@ -2,39 +2,54 @@ package com.mods.omnigears.items.armors;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import com.mods.omnigears.items.armors.base.IProtectionProvider;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.common.MinecraftForge;
 
 import java.util.UUID;
 import java.util.function.Consumer;
 
-public class ItemAdvancedNanoChest extends ItemElectricJetpack implements IProtectionProvider {
+public class ItemAdvancedJetpackChest extends ItemElectricJetpack {
 
-    public int energyPerDamage = 3200;
+    public int energyForExtinguish = 50000;
 
-    public ItemAdvancedNanoChest() {
-        super("advanced_nano", 4000000, 5000, Rarity.UNCOMMON, 144, true, true);
+    public ItemAdvancedJetpackChest() {
+        super("advanced_jetpack_chest", 4000000, 5000, Rarity.UNCOMMON, 144, true, true);
+        this.energyPerDamage = 1000;
+        MinecraftForge.EVENT_BUS.register(this);
     }
 
     @Override
-    public int getStoredEnergy(ItemStack stack) {
-        return getEnergyStored(stack);
-    }
-
-    @Override
-    public int getEnergyPerDamage() {
-        return energyPerDamage;
-    }
-
-    @Override
-    public int useEnergy(ItemStack stack, int amount, boolean simulate) {
-        return extractEnergy(stack, amount, simulate);
+    public void onArmorTick(ItemStack stack, Level level, Player player) {
+        super.onArmorTick(stack, level, player);
+        if (!level.isClientSide()) {
+            if (level.getGameTime() % 2 == 0) {
+                if (player.isOnFire()) {
+                    if (hasEnergy(stack, this.energyForExtinguish)) {
+                        for (int i = 0; i < player.getInventory().items.size(); i++) {
+                            player.getInventory().getItem(i);
+                            ItemStack mainItem = player.getInventory().getItem(i).copy();
+                            if (mainItem.getItem() == Items.ICE) {
+                                if (player.getInventory().getItem(i).getCount() >= 1) {
+                                    player.getInventory().getItem(i).shrink(1);
+                                }
+                                extractEnergy(stack, this.energyForExtinguish, false);
+                                player.clearFire();
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     @Override
@@ -70,5 +85,15 @@ public class ItemAdvancedNanoChest extends ItemElectricJetpack implements IProte
     @Override
     public boolean isDamageable(ItemStack stack) {
         return false;
+    }
+
+    @Override
+    public boolean isFullSet(Player player) {
+        return true;
+    }
+
+    @Override
+    public boolean provideProtection() {
+        return true;
     }
 }

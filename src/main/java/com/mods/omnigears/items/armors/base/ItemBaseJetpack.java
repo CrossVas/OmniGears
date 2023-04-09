@@ -2,7 +2,7 @@ package com.mods.omnigears.items.armors.base;
 
 import cofh.lib.api.item.IEnergyContainerItem;
 import com.mods.omnigears.client.Keyboard;
-import com.mods.omnigears.utils.Helpers;
+import com.mods.omnigears.Helpers;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;

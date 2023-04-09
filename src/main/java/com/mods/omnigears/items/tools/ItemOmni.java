@@ -7,7 +7,7 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.mods.omnigears.OmniGears;
 import com.mods.omnigears.client.Keyboard;
-import com.mods.omnigears.utils.Helpers;
+import com.mods.omnigears.Helpers;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;

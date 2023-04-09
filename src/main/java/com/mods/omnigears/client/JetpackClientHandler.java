@@ -2,7 +2,7 @@ package com.mods.omnigears.client;
 
 import cofh.lib.api.item.IEnergyContainerItem;
 import com.mods.omnigears.items.armors.base.ItemBaseJetpack;
-import com.mods.omnigears.utils.Helpers;
+import com.mods.omnigears.Helpers;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;

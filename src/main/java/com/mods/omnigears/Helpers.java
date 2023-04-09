@@ -1,4 +1,4 @@
-package com.mods.omnigears.utils;
+package com.mods.omnigears;
 
 import cofh.lib.api.item.IEnergyContainerItem;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
@@ -26,6 +26,21 @@ import java.util.List;
 import java.util.Set;
 
 public class Helpers {
+
+    public static ItemStack getCharged(Item item, int charge) {
+        if (item instanceof IEnergyContainerItem electricItem) {
+            ItemStack chargedItem = new ItemStack(item);
+            electricItem.setEnergyStored(chargedItem, charge);
+            return chargedItem;
+        } else {
+            return null;
+        }
+    }
+
+    public static void addChargeVariants(Item item, List<ItemStack> list) {
+        list.add(getCharged(item, 0));
+        list.add(getCharged(item, Integer.MAX_VALUE));
+    }
 
     public static MutableComponent formatColor(String text, ChatFormatting style) {
         return Component.literal(text).withStyle(style);

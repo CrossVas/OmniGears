@@ -1,42 +1,51 @@
 package com.mods.omnigears.items.armors.base;
 
-import cofh.core.item.ArmorItemCoFH;
 import cofh.lib.api.item.IEnergyContainerItem;
 import cofh.lib.energy.EnergyContainerItemWrapper;
 import cofh.lib.util.helpers.StringHelper;
+import com.mods.omnigears.Helpers;
 import com.mods.omnigears.OmniGears;
-import com.mods.omnigears.utils.Helpers;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class ItemBaseElectricArmor extends ArmorItemCoFH implements IEnergyContainerItem, IEnergyPack {
+public class ItemBaseElectricArmor extends ArmorItem implements IEnergyContainerItem, IEnergyPack, IProtectionProvider {
 
     public int capacity, transfer;
+    public int energyPerDamage = 250;
 
     public ItemBaseElectricArmor(String id, EquipmentSlot slot, int capacity, int transfer, Rarity rarity) {
-        super(new ArmorMaterialOmni(id), slot, new Properties().stacksTo(1).setNoRepair().tab(OmniGears.TAB).rarity(rarity));
+        super(new ArmorMaterialOmni(id), slot, new Item.Properties().stacksTo(1).setNoRepair().tab(OmniGears.TAB).rarity(rarity));
         this.capacity = capacity;
         this.transfer = transfer;
     }
 
     @Override
+    public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> items) {
+        if (allowedIn(tab))
+            Helpers.addChargeVariants(this, items);
+    }
+
+    @Override
     public void onArmorTick(ItemStack stack, Level level, Player player) {
         if (!level.isClientSide()) {
-            if (player.getInventory().armor.get(2) == stack) {
+            if (player.getItemBySlot(EquipmentSlot.CHEST) == stack) {
                 int extract = this.getExtract(stack);
                 for (ItemStack item : player.getInventory().items) {
                     if (!(item.getItem() instanceof IEnergyPack) && canProvideEnergy(stack)) {
@@ -105,4 +114,35 @@ public class ItemBaseElectricArmor extends ArmorItemCoFH implements IEnergyConta
         return this.capacity;
     }
 
+    @Override
+    public boolean isFullSet(Player player) {
+        return false;
+    }
+
+    @Override
+    public boolean provideProtection() {
+        return false;
+    }
+
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public void onHurtEvent(LivingHurtEvent e) {
+        if (e.getEntity() instanceof Player player) {
+            float damage = e.getAmount();
+            if (e.isCanceled()) return;
+            if (damage <= 0) return;
+            float realDamage = Math.max(0.5F, damage * 1.5F);
+            player.getArmorSlots().forEach(stack -> {
+                if (stack.getItem() instanceof ItemBaseElectricArmor armor) {
+                    if (armor.provideProtection()) {
+                        int energy = Math.min((int) (realDamage * energyPerDamage), getEnergyStored(stack));
+                        extractEnergy(stack, energy, false);
+                        player.hurt(DamageSource.FALL, damage * 0.05f);
+                        if (armor.isFullSet(player)) {
+                            e.setCanceled(true);
+                        }
+                    }
+                }
+            });
+        }
+    }
 }
