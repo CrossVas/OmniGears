@@ -14,7 +14,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -32,7 +31,6 @@ public class ItemArmorAdvanced extends ItemBaseElectricArmor {
     public ItemArmorAdvanced(EquipmentSlot slot) {
         super("advanced", slot, 1000000, 5000, Rarity.UNCOMMON);
         this.slot = slot;
-        MinecraftForge.EVENT_BUS.register(this);
     }
 
     @Override

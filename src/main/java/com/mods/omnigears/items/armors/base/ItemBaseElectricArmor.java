@@ -14,6 +14,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
@@ -34,6 +35,7 @@ public class ItemBaseElectricArmor extends ArmorItem implements IEnergyContainer
         super(new ArmorMaterialOmni(id), slot, new Item.Properties().stacksTo(1).setNoRepair().tab(OmniGears.TAB).rarity(rarity));
         this.capacity = capacity;
         this.transfer = transfer;
+        MinecraftForge.EVENT_BUS.register(this);
     }
 
     @Override

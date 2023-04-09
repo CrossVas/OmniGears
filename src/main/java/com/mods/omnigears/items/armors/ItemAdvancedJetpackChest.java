@@ -12,7 +12,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.MinecraftForge;
 
 import java.util.UUID;
 import java.util.function.Consumer;
@@ -24,7 +23,6 @@ public class ItemAdvancedJetpackChest extends ItemElectricJetpack {
     public ItemAdvancedJetpackChest() {
         super("advanced_jetpack_chest", 4000000, 5000, Rarity.UNCOMMON, 144, true, true);
         this.energyPerDamage = 1000;
-        MinecraftForge.EVENT_BUS.register(this);
     }
 
     @Override
