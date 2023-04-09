@@ -2,6 +2,7 @@ package com.mods.omnigears.items.armors;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
+import com.mods.omnigears.items.armors.base.IProtectionProvider;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -13,12 +14,27 @@ import net.minecraft.world.item.Rarity;
 import java.util.UUID;
 import java.util.function.Consumer;
 
-public class ItemAdvancedNanoChest extends ItemElectricJetpack {
+public class ItemAdvancedNanoChest extends ItemElectricJetpack implements IProtectionProvider {
 
     public int energyPerDamage = 3200;
 
     public ItemAdvancedNanoChest() {
         super("advanced_nano", 4000000, 5000, Rarity.UNCOMMON, 144, true, true);
+    }
+
+    @Override
+    public int getStoredEnergy(ItemStack stack) {
+        return getEnergyStored(stack);
+    }
+
+    @Override
+    public int getEnergyPerDamage() {
+        return energyPerDamage;
+    }
+
+    @Override
+    public int useEnergy(ItemStack stack, int amount, boolean simulate) {
+        return extractEnergy(stack, amount, simulate);
     }
 
     @Override

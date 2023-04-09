@@ -3,7 +3,6 @@ package com.mods.omnigears;
 import com.mods.omnigears.client.JetpackClientHandler;
 import com.mods.omnigears.client.Keyboard;
 import com.mods.omnigears.client.OmniSounds;
-import com.mods.omnigears.events.OmniArmorEventHandlers;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.common.MinecraftForge;

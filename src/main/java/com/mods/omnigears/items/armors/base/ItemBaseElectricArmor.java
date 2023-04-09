@@ -104,4 +104,5 @@ public class ItemBaseElectricArmor extends ArmorItemCoFH implements IEnergyConta
     public int getMaxEnergyStored(ItemStack container) {
         return this.capacity;
     }
+
 }

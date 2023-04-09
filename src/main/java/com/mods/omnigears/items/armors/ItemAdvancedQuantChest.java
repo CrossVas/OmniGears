@@ -3,6 +3,7 @@ package com.mods.omnigears.items.armors;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.mods.omnigears.client.Keyboard;
+import com.mods.omnigears.items.armors.base.IProtectionProvider;
 import com.mods.omnigears.items.armors.base.ItemBaseElectricArmor;
 import com.mods.omnigears.utils.Helpers;
 import net.minecraft.ChatFormatting;
@@ -21,7 +22,7 @@ import net.minecraft.world.level.Level;
 import java.util.UUID;
 import java.util.function.Consumer;
 
-public class ItemAdvancedQuantChest extends ItemBaseElectricArmor {
+public class ItemAdvancedQuantChest extends ItemBaseElectricArmor implements IProtectionProvider {
 
     public boolean gravitation;
     public boolean levitation;
@@ -38,6 +39,21 @@ public class ItemAdvancedQuantChest extends ItemBaseElectricArmor {
     @Override
     public boolean canProvideEnergy(ItemStack stack) {
         return true;
+    }
+
+    @Override
+    public int getStoredEnergy(ItemStack stack) {
+        return getEnergyStored(stack);
+    }
+
+    @Override
+    public int getEnergyPerDamage() {
+        return energyPerDamage;
+    }
+
+    @Override
+    public int useEnergy(ItemStack stack, int amount, boolean simulate) {
+        return extractEnergy(stack, amount, simulate);
     }
 
     @Override
