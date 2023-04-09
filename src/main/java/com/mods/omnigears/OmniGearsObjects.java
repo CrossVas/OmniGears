@@ -1,14 +1,12 @@
 package com.mods.omnigears;
 
 import com.mods.omnigears.items.ItemComponents;
-import com.mods.omnigears.items.armors.ItemAdvancedNanoChest;
-import com.mods.omnigears.items.armors.ItemAdvancedQuantChest;
-import com.mods.omnigears.items.armors.ItemBaseEnergyPack;
-import com.mods.omnigears.items.armors.ItemElectricJetpack;
+import com.mods.omnigears.items.armors.*;
 import com.mods.omnigears.items.tools.ItemDrill;
 import com.mods.omnigears.items.tools.ItemOmni;
 import com.mods.omnigears.items.tools.ItemSaw;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.Tiers;
@@ -29,6 +27,9 @@ public class OmniGearsObjects {
 
     public static Item JETPACK, ADVANCED_JETPACK, ADVANCED_NANO, ADVANCED_QUANT;
 
+    // Armor set
+    public static Item HANO_HELMET, NANO_CHEST, NANO_LEGS, NANO_BOOTS;
+
     public static void init() {
         DRILL = registerItem(new ItemDrill(), "drill");
         DIAMOND_DRILL = registerItem(new ItemDrill(Tiers.DIAMOND, 1000, 40000), "diamond_drill");
@@ -44,6 +45,11 @@ public class OmniGearsObjects {
         ADVANCED_JETPACK = registerItem(new ItemElectricJetpack("advanced_jetpack", 4000000, 5000, Rarity.UNCOMMON, 144, true, true), "advanced_jetpack");
         ADVANCED_NANO = registerItem(new ItemAdvancedNanoChest(), "advanced_nano");
         ADVANCED_QUANT = registerItem(new ItemAdvancedQuantChest(), "advanced_quant");
+
+        HANO_HELMET = registerItem(new ItemNanoArmor("nano", EquipmentSlot.HEAD), "nano_helmet");
+        NANO_CHEST = registerItem(new ItemNanoArmor("nano", EquipmentSlot.CHEST), "nano_chest");
+        NANO_LEGS = registerItem(new ItemNanoArmor("nano", EquipmentSlot.LEGS), "nano_legs");
+        NANO_BOOTS = registerItem(new ItemNanoArmor("nano", EquipmentSlot.FEET), "nano_boots");
 
         COOLING_CORE = registerItem(new ItemComponents(), "cooling_core");
         ENGINE_BOOSTER = registerItem(new ItemComponents(), "engine_booster");

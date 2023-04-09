@@ -25,6 +25,10 @@
   "item.omnigears.advanced_jetpack": "Advanced Jetpack",
   "item.omnigears.advanced_nano": "Advanced Nano Chestplate",
   "item.omnigears.advanced_quant": "Advanced Quant Chestplate",
+  "item.omnigears.nano_helmet": "Nano Helmet",
+  "item.omnigears.nano_chest": "Nano Chestplate",
+  "item.omnigears.nano_legs": "Nano Leggings",
+  "item.omnigears.nano_boots": "Nano Boots",
 
   "message.text.mode": "Tool Mode: ",
   "message.text.mode.eff": "Efficiency Mode: ",

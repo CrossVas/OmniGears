@@ -43,8 +43,10 @@ public class ItemAdvancedNanoChest extends ItemElectricJetpack implements IProte
         UUID uuid = ARMOR_MODIFIER_UUID_PER_SLOT[slot.getIndex()];
         ImmutableMultimap.Builder<Attribute, AttributeModifier> modifiers = ImmutableMultimap.builder();
         if (slot == EquipmentSlot.CHEST) {
-            modifiers.put(Attributes.ARMOR, new AttributeModifier(uuid, "Armor modifier", 8, AttributeModifier.Operation.ADDITION));
-            modifiers.put(Attributes.ARMOR_TOUGHNESS, new AttributeModifier(uuid, "Armor modifier", 2, AttributeModifier.Operation.ADDITION));
+            if (hasEnergy(stack, this.energyPerDamage)) {
+                modifiers.put(Attributes.ARMOR, new AttributeModifier(uuid, "Armor modifier", 8, AttributeModifier.Operation.ADDITION));
+                modifiers.put(Attributes.ARMOR_TOUGHNESS, new AttributeModifier(uuid, "Armor modifier", 2, AttributeModifier.Operation.ADDITION));
+            }
         }
         return modifiers.build();
     }
