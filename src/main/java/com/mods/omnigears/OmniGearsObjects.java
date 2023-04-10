@@ -15,7 +15,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class OmniGearsObjects {
 
     // Components
-    public static Item COOLING_CORE, ENGINE_BOOSTER, GRAVI_ENGINE, MAGNETRON, SUPERCONDUCTOR, SUPERCONDUCTOR_COVER, OMNI_CORE;
+    public static Item OMNI_COOLING_CORE, OMNI_BOOSTER, OMNI_ENGINE, MAGNETRON, SUPERCONDUCTOR, SUPERCONDUCTOR_COVER, OMNITOOL_CORE, CARBON_PART, CARBON_MESH, REDSTONE_CARBON_PLATE, ADVANCED_CARBON_PLATE;
 
     // Tools
     public static Item DRILL, DIAMOND_DRILL, ADVANCED_DRILL, CHAINSAW, ADVANCED_CHAINSAW, OMNITOOL;
@@ -50,13 +50,17 @@ public class OmniGearsObjects {
         ADV_LEGS = registerItem(new ItemArmorAdvanced(EquipmentSlot.LEGS), "adv_legs");
         ADV_BOOTS = registerItem(new ItemArmorAdvanced(EquipmentSlot.FEET), "adv_boots");
 
-        COOLING_CORE = registerItem(new ItemComponents(), "cooling_core");
-        ENGINE_BOOSTER = registerItem(new ItemComponents(), "engine_booster");
-        GRAVI_ENGINE = registerItem(new ItemComponents(), "gravi_engine");
+        OMNI_COOLING_CORE = registerItem(new ItemComponents(), "omni_cooling_core");
+        OMNI_BOOSTER = registerItem(new ItemComponents(), "omni_booster");
+        OMNI_ENGINE = registerItem(new ItemComponents(), "omni_engine");
         MAGNETRON = registerItem(new ItemComponents(), "magnetron");
         SUPERCONDUCTOR = registerItem(new ItemComponents(), "superconductor");
         SUPERCONDUCTOR_COVER = registerItem(new ItemComponents(), "superconductor_cover");
-        OMNI_CORE = registerItem(new ItemComponents(), "omni_core");
+        OMNITOOL_CORE = registerItem(new ItemComponents(), "omnitool_core");
+        CARBON_PART = registerItem(new ItemComponents(), "carbon_part");
+        CARBON_MESH = registerItem(new ItemComponents(), "carbon_mesh");
+        REDSTONE_CARBON_PLATE = registerItem(new ItemComponents(), "redstone_carbon_plate");
+        ADVANCED_CARBON_PLATE = registerItem(new ItemComponents(), "advanced_carbon_plate");
     }
 
     public static <T extends Item> T registerItem(T item, String name) {

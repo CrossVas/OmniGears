@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "omnigears:item/omni_core"
+    "layer0": "omnigears:item/carbon_mesh"
   }
 }

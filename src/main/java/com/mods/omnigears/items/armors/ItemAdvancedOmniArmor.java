@@ -16,6 +16,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.Level;
 
@@ -29,6 +30,7 @@ public class ItemAdvancedOmniArmor extends ItemBaseElectricArmor implements IPro
     public static final String TAG_ENABLED = "enabled";
     public static final String TAG_LEVITATION = "levitation";
     public static final String TICKER = "ticker";
+    public int energyForExtinguish = 100000;
 
     public ItemAdvancedOmniArmor() {
         super("advanced_omniarmor", EquipmentSlot.CHEST, 40000000, 200000, Rarity.RARE);
@@ -90,15 +92,15 @@ public class ItemAdvancedOmniArmor extends ItemBaseElectricArmor implements IPro
         super.onArmorTick(stack, level, player);
         CompoundTag tag = Helpers.getCompoundTag(stack);
         boolean enabled = tag.getBoolean(TAG_ENABLED);
-        byte ticker = tag.getByte(TICKER);
+        byte engineTicker = tag.getByte(TICKER);
         boolean server = !level.isClientSide();
 
-        if (ticker > 0) {
-            --ticker;
-            tag.putByte(TICKER, ticker);
+        if (engineTicker > 0) {
+            --engineTicker;
+            tag.putByte(TICKER, engineTicker);
         }
 
-        if (Keyboard.isFlyKeyDown() && !Minecraft.getInstance().isPaused() && ticker <= 0) {
+        if (Keyboard.isFlyKeyDown() && !Minecraft.getInstance().isPaused() && engineTicker <= 0) {
             tag.putByte(TICKER, (byte) 5);
             if (!enabled) {
                 tag.putBoolean(TAG_ENABLED, true);
@@ -130,7 +132,7 @@ public class ItemAdvancedOmniArmor extends ItemBaseElectricArmor implements IPro
                 }
             }
 
-            if (Keyboard.isJumpKeyDown() && Keyboard.isModeSwitchKeyDown() && ticker <= 0) {
+            if (Keyboard.isJumpKeyDown() && Keyboard.isModeSwitchKeyDown() && engineTicker <= 0) {
                 tag.putByte(TICKER, (byte) 5);
                 if (tag.getBoolean(TAG_LEVITATION)) {
                     saveWorkMode(stack, false);
@@ -154,6 +156,27 @@ public class ItemAdvancedOmniArmor extends ItemBaseElectricArmor implements IPro
 
             if (gravitation || (player.getAbilities().flying && !player.isOnGround())) {
                 this.extractEnergy(stack, 1500, false);
+            }
+        }
+
+        if (server) {
+            if (ticker++ % tickRate == 0) {
+                if (player.isOnFire()) {
+                    if (hasEnergy(stack, this.energyForExtinguish)) {
+                        for (int i = 0; i < player.getInventory().items.size(); i++) {
+                            player.getInventory().getItem(i);
+                            ItemStack mainItem = player.getInventory().getItem(i).copy();
+                            if (mainItem.getItem() == Items.ICE) {
+                                if (player.getInventory().getItem(i).getCount() >= 1) {
+                                    player.getInventory().getItem(i).shrink(1);
+                                }
+                                extractEnergy(stack, this.energyForExtinguish, false);
+                                player.clearFire();
+                                break;
+                            }
+                        }
+                    }
+                }
             }
         }
     }

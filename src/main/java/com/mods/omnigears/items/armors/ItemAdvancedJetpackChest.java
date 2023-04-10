@@ -29,7 +29,7 @@ public class ItemAdvancedJetpackChest extends ItemElectricJetpack {
     public void onArmorTick(ItemStack stack, Level level, Player player) {
         super.onArmorTick(stack, level, player);
         if (!level.isClientSide()) {
-            if (level.getGameTime() % 2 == 0) {
+            if (ticker++ % tickRate == 0) {
                 if (player.isOnFire()) {
                     if (hasEnergy(stack, this.energyForExtinguish)) {
                         for (int i = 0; i < player.getInventory().items.size(); i++) {

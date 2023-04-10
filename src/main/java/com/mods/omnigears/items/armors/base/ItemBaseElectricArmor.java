@@ -29,6 +29,7 @@ import java.util.List;
 public class ItemBaseElectricArmor extends ArmorItem implements IEnergyContainerItem, IEnergyPack, IProtectionProvider {
 
     public int capacity, transfer;
+    public byte ticker, tickRate = 10;
     public int energyPerDamage = 250;
 
     public ItemBaseElectricArmor(String id, EquipmentSlot slot, int capacity, int transfer, Rarity rarity) {
@@ -126,6 +127,11 @@ public class ItemBaseElectricArmor extends ArmorItem implements IEnergyContainer
         return false;
     }
 
+    @Override
+    public void useEnergy(ItemStack stack, int amount) {
+        extractEnergy(stack, amount, false);
+    }
+
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onHurtEvent(LivingHurtEvent e) {
         if (e.getEntity() instanceof Player player) {
@@ -133,14 +139,17 @@ public class ItemBaseElectricArmor extends ArmorItem implements IEnergyContainer
             if (e.isCanceled()) return;
             if (damage <= 0) return;
             float realDamage = Math.max(0.5F, damage * 1.5F);
+            player.displayClientMessage(Helpers.formatSimpleMessage(ChatFormatting.GRAY, "Amount of damage: " + realDamage), false);
             player.getArmorSlots().forEach(stack -> {
                 if (stack.getItem() instanceof ItemBaseElectricArmor armor) {
-                    if (armor.provideProtection()) {
-                        int energy = Math.min((int) (realDamage * energyPerDamage), getEnergyStored(stack));
-                        extractEnergy(stack, energy, false);
-                        player.hurt(DamageSource.FALL, damage * 0.05f);
+                    if (armor.provideProtection() && hasEnergy(stack, armor.energyPerDamage)) {
+                        int energy = Math.min((int) (realDamage * armor.energyPerDamage), getEnergyStored(stack));
+                        armor.useEnergy(stack, energy);
+                        player.displayClientMessage(Helpers.formatSimpleMessage(ChatFormatting.GRAY, "Energy used: " + energy), false);
                         if (armor.isFullSet(player)) {
                             e.setCanceled(true);
+                        } else {
+                            player.hurt(DamageSource.FALL, damage * 0.05f);
                         }
                     }
                 }

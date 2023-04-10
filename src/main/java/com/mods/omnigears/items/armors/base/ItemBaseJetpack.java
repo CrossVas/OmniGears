@@ -66,9 +66,9 @@ public class ItemBaseJetpack extends ItemBaseElectricArmor implements IEnergyPac
             if (server) {
                 int accellerationTicker = player.getPersistentData().getInt("SpecialMovementTicker");
                 if (accellerationTicker > 0) {
-                    CompoundTag var10000 = player.getPersistentData();
+                    CompoundTag persistentData = player.getPersistentData();
                     --accellerationTicker;
-                    var10000.putInt("SpecialMovementTicker", accellerationTicker);
+                    persistentData.putInt("SpecialMovementTicker", accellerationTicker);
                     if (accellerationTicker == 0) {
                         player.getPersistentData().putBoolean("SpecialMovement", false);
                     }
