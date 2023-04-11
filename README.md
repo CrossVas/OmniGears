@@ -9,10 +9,10 @@ Plans:
 
 - Jetpacks: Electric Jetpack, Advanced Electric Jetpack;
 
-- Tools: DONE! Mining Drill, Diamond Drill, Advanced Drill, OmniTool;
+- Tools: Mining Drill, Diamond Drill, Advanced Drill, OmniTool;
 
 - TODO: Compat Recipes
 
 ## Credits
 
-I don't own the idea. Full credit for the idea goes to SeNtiMeL and IC2 Dev team.
+I don't own the idea. Full credit for the idea goes to [SeNtiMeL](https://forum.industrial-craft.net/thread/6915-ic2-exp-1-7-10-gravitation-suite-v2-0-3/) and IC2 Dev team.
