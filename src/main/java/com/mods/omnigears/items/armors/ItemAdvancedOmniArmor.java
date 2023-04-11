@@ -2,13 +2,14 @@ package com.mods.omnigears.items.armors;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import com.mods.omnigears.client.Keyboard;
+import com.mods.omnigears.client.keyboard.KeyboardHandler;
 import com.mods.omnigears.items.armors.base.IProtectionProvider;
 import com.mods.omnigears.items.armors.base.ItemBaseElectricArmor;
 import com.mods.omnigears.Helpers;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -18,8 +19,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.UUID;
 import java.util.function.Consumer;
 
@@ -27,7 +31,7 @@ public class ItemAdvancedOmniArmor extends ItemBaseElectricArmor implements IPro
 
     public boolean gravitation;
     public boolean levitation;
-    public static final String TAG_ENABLED = "enabled";
+    public static final String TAG_GRAVITATION = "enabled";
     public static final String TAG_LEVITATION = "levitation";
     public static final String TICKER = "ticker";
     public int energyForExtinguish = 100000;
@@ -50,6 +54,19 @@ public class ItemAdvancedOmniArmor extends ItemBaseElectricArmor implements IPro
     @Override
     public boolean provideProtection() {
         return true;
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
+        boolean isEngineOn = getEngineStatus(stack);
+        boolean isLevitationOn = getWorkStatus(stack);
+        String engineStatus = isEngineOn ? "message.text.on" : "message.text.off";
+        ChatFormatting engineColor = isEngineOn ? ChatFormatting.GREEN : ChatFormatting.RED;
+        String levitationStatus = isLevitationOn ? "message.text.on" : "message.text.off";
+        ChatFormatting levitationColor = levitation ? ChatFormatting.GREEN : ChatFormatting.RED;
+        tooltip.add(Helpers.formatComplexMessage(ChatFormatting.GOLD, "message.text.gravitation", engineColor, engineStatus));
+        tooltip.add(Helpers.formatComplexMessage(ChatFormatting.GOLD, "message.text.levitation", levitationColor, levitationStatus));
+        super.appendHoverText(stack, level, tooltip, flag);
     }
 
     @Override
@@ -91,7 +108,7 @@ public class ItemAdvancedOmniArmor extends ItemBaseElectricArmor implements IPro
     public void onArmorTick(ItemStack stack, Level level, Player player) {
         super.onArmorTick(stack, level, player);
         CompoundTag tag = Helpers.getCompoundTag(stack);
-        boolean enabled = tag.getBoolean(TAG_ENABLED);
+        boolean enabled = tag.getBoolean(TAG_GRAVITATION);
         byte engineTicker = tag.getByte(TICKER);
         boolean server = !level.isClientSide();
 
@@ -100,10 +117,10 @@ public class ItemAdvancedOmniArmor extends ItemBaseElectricArmor implements IPro
             tag.putByte(TICKER, engineTicker);
         }
 
-        if (Keyboard.isFlyKeyDown() && !Minecraft.getInstance().isPaused() && engineTicker <= 0) {
+        if (KeyboardHandler.instance.isToggleKeyDown(player) && !Minecraft.getInstance().isPaused() && engineTicker <= 0) {
             tag.putByte(TICKER, (byte) 5);
             if (!enabled) {
-                tag.putBoolean(TAG_ENABLED, true);
+                tag.putBoolean(TAG_GRAVITATION, true);
                 player.getAbilities().mayfly = true;
                 gravitation = true;
                 if (levitation)
@@ -111,7 +128,7 @@ public class ItemAdvancedOmniArmor extends ItemBaseElectricArmor implements IPro
                 if (server)
                     player.displayClientMessage(Helpers.formatComplexMessage(ChatFormatting.AQUA, "message.text.gravitation", ChatFormatting.GREEN, "message.text.on"), false);
             } else {
-                tag.putBoolean(TAG_ENABLED, false);
+                tag.putBoolean(TAG_GRAVITATION, false);
                 player.getAbilities().mayfly = false;
                 player.getAbilities().flying = false;
                 gravitation = false;
@@ -132,7 +149,7 @@ public class ItemAdvancedOmniArmor extends ItemBaseElectricArmor implements IPro
                 }
             }
 
-            if (Keyboard.isJumpKeyDown() && Keyboard.isModeSwitchKeyDown() && engineTicker <= 0) {
+            if (KeyboardHandler.isJumpKeyDown() && KeyboardHandler.instance.isModeSwitchKeyDown(player) && engineTicker <= 0) {
                 tag.putByte(TICKER, (byte) 5);
                 if (tag.getBoolean(TAG_LEVITATION)) {
                     saveWorkMode(stack, false);
@@ -184,7 +201,7 @@ public class ItemAdvancedOmniArmor extends ItemBaseElectricArmor implements IPro
     // Returns gravity engine status
     public static boolean getEngineStatus(ItemStack stack) {
         CompoundTag tag = Helpers.getCompoundTag(stack);
-        return tag.getBoolean(TAG_ENABLED);
+        return tag.getBoolean(TAG_GRAVITATION);
     }
 
     // Returns levitation status

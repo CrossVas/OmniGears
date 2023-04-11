@@ -1,9 +1,18 @@
 {
-  "jetpack_sound": {
+  "jetpack_engine": {
     "category": "entity",
     "sounds": [
       {
-        "name": "omnigears:jetpack_sound",
+        "name": "omnigears:jetpack_engine",
+        "pitch": 0.8
+      }
+    ]
+  },
+  "omni_engine": {
+    "category": "entity",
+    "sounds": [
+      {
+        "name": "omnigears:omni_engine",
         "pitch": 0.8
       }
     ]

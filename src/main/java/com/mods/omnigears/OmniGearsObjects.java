@@ -15,7 +15,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class OmniGearsObjects {
 
     // Components
-    public static Item OMNI_COOLING_CORE, OMNI_BOOSTER, OMNI_ENGINE, MAGNETRON, SUPERCONDUCTOR, SUPERCONDUCTOR_COVER, OMNITOOL_CORE, CARBON_PART, CARBON_MESH, REDSTONE_CARBON_PLATE, ADVANCED_CARBON_PLATE;
+    public static Item OMNI_COOLING_CORE, OMNI_BOOSTER, OMNI_ENGINE, MAGNETRON, SUPERCONDUCTOR, SUPERCONDUCTOR_COVER, OMNITOOL_CORE, CARBON_PART, CARBON_MESH, REDSTONE_CARBON_PLATE, ADVANCED_CARBON_PLATE, BATTERY_HULL;
 
     // Tools
     public static Item DRILL, DIAMOND_DRILL, ADVANCED_DRILL, CHAINSAW, ADVANCED_CHAINSAW, OMNITOOL;
@@ -30,6 +30,19 @@ public class OmniGearsObjects {
     public static Item ADV_HELMET, ADV_CHEST, ADV_LEGS, ADV_BOOTS;
 
     public static void init() {
+        BATTERY_HULL = registerItem(new ItemComponents(), "battery_hull");
+        CARBON_PART = registerItem(new ItemComponents(), "carbon_part");
+        CARBON_MESH = registerItem(new ItemComponents(), "carbon_mesh");
+        REDSTONE_CARBON_PLATE = registerItem(new ItemComponents(), "redstone_carbon_plate");
+        ADVANCED_CARBON_PLATE = registerItem(new ItemComponents(), "advanced_carbon_plate");
+        MAGNETRON = registerItem(new ItemComponents(), "magnetron");
+        SUPERCONDUCTOR = registerItem(new ItemComponents(), "superconductor");
+        SUPERCONDUCTOR_COVER = registerItem(new ItemComponents(), "superconductor_cover");
+        OMNI_BOOSTER = registerItem(new ItemComponents(), "omni_booster");
+        OMNI_ENGINE = registerItem(new ItemComponents(), "omni_engine");
+        OMNITOOL_CORE = registerItem(new ItemComponents(), "omnitool_core");
+        OMNI_COOLING_CORE = registerItem(new ItemComponents(), "omni_cooling_core");
+
         DRILL = registerItem(new ItemDrill(), "drill");
         DIAMOND_DRILL = registerItem(new ItemDrill(Tiers.DIAMOND, 1000, 40000), "diamond_drill");
         ADVANCED_DRILL = registerItem(new ItemDrill.ItemAdvancedDrill(), "advanced_drill");
@@ -49,18 +62,6 @@ public class OmniGearsObjects {
         ADV_CHEST = registerItem(new ItemArmorAdvanced(EquipmentSlot.CHEST), "adv_chest");
         ADV_LEGS = registerItem(new ItemArmorAdvanced(EquipmentSlot.LEGS), "adv_legs");
         ADV_BOOTS = registerItem(new ItemArmorAdvanced(EquipmentSlot.FEET), "adv_boots");
-
-        OMNI_COOLING_CORE = registerItem(new ItemComponents(), "omni_cooling_core");
-        OMNI_BOOSTER = registerItem(new ItemComponents(), "omni_booster");
-        OMNI_ENGINE = registerItem(new ItemComponents(), "omni_engine");
-        MAGNETRON = registerItem(new ItemComponents(), "magnetron");
-        SUPERCONDUCTOR = registerItem(new ItemComponents(), "superconductor");
-        SUPERCONDUCTOR_COVER = registerItem(new ItemComponents(), "superconductor_cover");
-        OMNITOOL_CORE = registerItem(new ItemComponents(), "omnitool_core");
-        CARBON_PART = registerItem(new ItemComponents(), "carbon_part");
-        CARBON_MESH = registerItem(new ItemComponents(), "carbon_mesh");
-        REDSTONE_CARBON_PLATE = registerItem(new ItemComponents(), "redstone_carbon_plate");
-        ADVANCED_CARBON_PLATE = registerItem(new ItemComponents(), "advanced_carbon_plate");
     }
 
     public static <T extends Item> T registerItem(T item, String name) {

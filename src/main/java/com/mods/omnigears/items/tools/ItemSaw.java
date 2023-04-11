@@ -5,11 +5,12 @@ import cofh.lib.util.Utils;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.mods.omnigears.OmniGears;
-import com.mods.omnigears.client.Keyboard;
+import com.mods.omnigears.client.keyboard.KeyboardHandler;
 import com.mods.omnigears.Helpers;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.stats.Stats;
@@ -25,10 +26,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.Tiers;
-import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -128,8 +126,9 @@ public class ItemSaw extends EnergyContainerItem {
     }
 
     @Override
-    public Rarity getRarity(ItemStack stack) {
-        return Rarity.UNCOMMON;
+    public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
+        if (allowedIn(group))
+            Helpers.addChargeVariants(this, items);
     }
 
     @Override
@@ -242,12 +241,17 @@ public class ItemSaw extends EnergyContainerItem {
         }
 
         @Override
+        public Rarity getRarity(ItemStack stack) {
+            return Rarity.UNCOMMON;
+        }
+
+        @Override
         public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flagIn) {
-            super.appendHoverText(stack, world, tooltip, flagIn);
             boolean isShearsOn = getChainsawMode(stack);
             String status = isShearsOn ? "message.text.on" : "message.text.off";
             ChatFormatting color = isShearsOn ? ChatFormatting.GREEN : ChatFormatting.RED;
             tooltip.add(Helpers.formatComplexMessage(ChatFormatting.GOLD, "message.text.mode.shears", color, status));
+            super.appendHoverText(stack, world, tooltip, flagIn);
         }
 
         public boolean getChainsawMode(ItemStack stack) {
@@ -275,7 +279,7 @@ public class ItemSaw extends EnergyContainerItem {
         public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
             ItemStack stack = player.getItemInHand(hand);
             if (!level.isClientSide()) {
-                if (Keyboard.isModeSwitchKeyDown()) {
+                if (KeyboardHandler.instance.isModeSwitchKeyDown(player)) {
                     changeChainsawMode(stack, player);
                 }
                 return InteractionResultHolder.success(stack);

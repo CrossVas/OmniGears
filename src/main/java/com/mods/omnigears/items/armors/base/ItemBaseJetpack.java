@@ -1,7 +1,7 @@
 package com.mods.omnigears.items.armors.base;
 
 import cofh.lib.api.item.IEnergyContainerItem;
-import com.mods.omnigears.client.Keyboard;
+import com.mods.omnigears.client.keyboard.KeyboardHandler;
 import com.mods.omnigears.Helpers;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -13,14 +13,18 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class ItemBaseJetpack extends ItemBaseElectricArmor implements IEnergyPack, IBoostProvider {
 
     public int usage;
     public static boolean lastUsed;
-    public static final String TAG_DISABLED = "disabled";
+    public static final String TAG_ENABLED = "enabled";
     public static final String TAG_TOGGLE_TIMER = "toggleTimer";
     public static final String TAG_JET_TICKER = "jetpackTicker";
     public static final String TAG_HOVER = "hover";
@@ -31,28 +35,45 @@ public class ItemBaseJetpack extends ItemBaseElectricArmor implements IEnergyPac
     }
 
     @Override
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
+        boolean isEngineOn = getEngineStatus(stack);
+        boolean isHoverOn = getHoverMode(stack);
+
+        ChatFormatting engineColor = isEngineOn ? ChatFormatting.GREEN : ChatFormatting.RED;
+        ChatFormatting hoverColor = isHoverOn ? ChatFormatting.GREEN : ChatFormatting.RED;
+
+        String engineStatus = isEngineOn ? "message.text.on" : "message.text.off";
+        String hoverStatus = isHoverOn ? "message.text.on" : "message.text.off";
+
+        tooltip.add(Helpers.formatComplexMessage(ChatFormatting.GOLD, "message.text.jetpack.engine", engineColor, engineStatus));
+        tooltip.add(Helpers.formatComplexMessage(ChatFormatting.GOLD, "message.text.jetpack.hover", hoverColor, hoverStatus));
+
+        super.appendHoverText(stack, level, tooltip, flag);
+    }
+
+    @Override
     public void onArmorTick(ItemStack stack, Level level, Player player) {
         super.onArmorTick(stack, level, player);
         Entity entity = player.getRootVehicle();
         CompoundTag tag = Helpers.getCompoundTag(stack);
-        boolean disabled = tag.getBoolean(TAG_DISABLED);
+        boolean enabled = tag.getBoolean(TAG_ENABLED);
         byte jetpackTicker = tag.getByte(TAG_JET_TICKER);
         byte toggleTimer = tag.getByte(TAG_TOGGLE_TIMER);
         boolean server = !level.isClientSide();
-        if (disabled) {
+        if (!enabled) {
             if (jetpackTicker > 0) {
                 --jetpackTicker;
                 tag.putByte(TAG_JET_TICKER, jetpackTicker);
-            } else if (Keyboard.isFlyKeyDown()) {
+            } else if (KeyboardHandler.instance.isToggleKeyDown(player)) {
                 tag.putByte(TAG_JET_TICKER, (byte) 5);
-                tag.putBoolean(TAG_DISABLED, false);
+                tag.putBoolean(TAG_ENABLED, true);
                 if (server) {
                     player.displayClientMessage(Helpers.formatComplexMessage(ChatFormatting.YELLOW, "message.text.jetpack.engine", ChatFormatting.GREEN, "message.text.on"), false);
                 }
             }
-        } else if (Keyboard.isFlyKeyDown() && jetpackTicker <= 0) {
+        } else if (KeyboardHandler.instance.isToggleKeyDown(player) && jetpackTicker <= 0) {
             tag.putByte(TAG_JET_TICKER, (byte) 5);
-            tag.putBoolean(TAG_DISABLED, true);
+            tag.putBoolean(TAG_ENABLED, false);
             if (server) {
                 player.displayClientMessage(Helpers.formatComplexMessage(ChatFormatting.YELLOW, "message.text.jetpack.engine", ChatFormatting.RED, "message.text.off"), false);
             }
@@ -77,7 +98,7 @@ public class ItemBaseJetpack extends ItemBaseElectricArmor implements IEnergyPac
 
             boolean isHover = tag.getBoolean(TAG_HOVER);
 
-            if (Minecraft.getInstance().options.keyJump.isDown() && Keyboard.isModeSwitchKeyDown() && !Keyboard.isAltKeyDown() && toggleTimer <= 0) {
+            if (Minecraft.getInstance().options.keyJump.isDown() && KeyboardHandler.instance.isModeSwitchKeyDown(player) && !KeyboardHandler.instance.isAltKeyDown(player) && toggleTimer <= 0) {
                 toggleTimer = 10;
                 changeHoverMode(stack, player);
             }
@@ -132,7 +153,7 @@ public class ItemBaseJetpack extends ItemBaseElectricArmor implements IEnergyPac
                 float friction = 0F;
 
                 if (forwardPower > 0.0F) {
-                    if (canProvideBoost(stack) && Keyboard.isBoostKeyDown()) {
+                    if (canProvideBoost(stack) && KeyboardHandler.instance.isBoostKeyDown(player)) {
                         usageMultiplier = 3;
                         if (hover) {
                             friction = 0.18F;
@@ -166,7 +187,7 @@ public class ItemBaseJetpack extends ItemBaseElectricArmor implements IEnergyPac
             if (hover) {
                 float maxHoverY = 0F;
                 int boostMultiplier = 1;
-                if (canProvideBoost(stack) && Keyboard.isBoostKeyDown()) {
+                if (canProvideBoost(stack) && KeyboardHandler.instance.isBoostKeyDown(player)) {
                     boostMultiplier = 4;
                 }
                 if (!player.isShiftKeyDown() || !Minecraft.getInstance().options.keyJump.isDown()) {
@@ -210,5 +231,15 @@ public class ItemBaseJetpack extends ItemBaseElectricArmor implements IEnergyPac
         if (player instanceof ServerPlayer) {
             player.getRootVehicle().getSelfAndPassengers().forEach(Entity::resetFallDistance);
         }
+    }
+
+    public static boolean getEngineStatus(ItemStack stack) {
+        CompoundTag tag = Helpers.getCompoundTag(stack);
+        return tag.getBoolean(TAG_ENABLED);
+    }
+
+    public static boolean getHoverMode(ItemStack stack) {
+        CompoundTag tag = Helpers.getCompoundTag(stack);
+        return tag.getBoolean(TAG_HOVER);
     }
 }

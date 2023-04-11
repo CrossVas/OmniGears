@@ -139,13 +139,11 @@ public class ItemBaseElectricArmor extends ArmorItem implements IEnergyContainer
             if (e.isCanceled()) return;
             if (damage <= 0) return;
             float realDamage = Math.max(0.5F, damage * 1.5F);
-            player.displayClientMessage(Helpers.formatSimpleMessage(ChatFormatting.GRAY, "Amount of damage: " + realDamage), false);
             player.getArmorSlots().forEach(stack -> {
                 if (stack.getItem() instanceof ItemBaseElectricArmor armor) {
                     if (armor.provideProtection() && hasEnergy(stack, armor.energyPerDamage)) {
                         int energy = Math.min((int) (realDamage * armor.energyPerDamage), getEnergyStored(stack));
                         armor.useEnergy(stack, energy);
-                        player.displayClientMessage(Helpers.formatSimpleMessage(ChatFormatting.GRAY, "Energy used: " + energy), false);
                         if (armor.isFullSet(player)) {
                             e.setCanceled(true);
                         } else {

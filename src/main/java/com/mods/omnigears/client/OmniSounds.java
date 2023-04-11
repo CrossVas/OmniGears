@@ -9,9 +9,11 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class OmniSounds {
 
-    public static final String JETPACK_SOUND_ID = "jetpack_sound";
+    public static final String JETPACK_SOUND_ID = "jetpack_engine";
+    public static final String OMNI_SOUND_ID = "omni_engine";
     public static final DeferredRegister<SoundEvent> REGISTRY = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, Refs.ID);
     public static RegistryObject<SoundEvent> JETPACK_SOUND = registerSounds(JETPACK_SOUND_ID);
+    public static RegistryObject<SoundEvent> OMNI_SOUND = registerSounds(OMNI_SOUND_ID);
 
     public static RegistryObject<SoundEvent> registerSounds(String name) {
         return REGISTRY.register(name, () -> new SoundEvent(new ResourceLocation(Refs.ID, name)));

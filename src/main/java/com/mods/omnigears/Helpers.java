@@ -1,8 +1,11 @@
 package com.mods.omnigears;
 
 import cofh.lib.api.item.IEnergyContainerItem;
+import com.mods.omnigears.items.armors.ItemAdvancedOmniArmor;
+import com.mods.omnigears.items.armors.base.ItemBaseJetpack;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -24,6 +27,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+
+import static com.mods.omnigears.items.armors.ItemAdvancedOmniArmor.TAG_GRAVITATION;
+import static com.mods.omnigears.items.armors.base.ItemBaseJetpack.TAG_ENABLED;
+import static com.mods.omnigears.items.armors.base.ItemBaseJetpack.TAG_HOVER;
 
 public class Helpers {
 
@@ -52,6 +59,29 @@ public class Helpers {
 
     public static MutableComponent formatComplexMessage(ChatFormatting color1, String text1, ChatFormatting color2, String text2) {
         return formatSimpleMessage(color1, text1).append(formatSimpleMessage(color2, text2));
+    }
+
+    public static boolean isFlying(Player player) {
+        if (player.isSpectator())
+            return false;
+
+        ItemStack armor = player.getInventory().getArmor(2);
+        CompoundTag tag = Helpers.getCompoundTag(armor);
+        if (!armor.isEmpty()) {
+            int energyStorage = ((IEnergyContainerItem) armor.getItem()).getEnergyStored(armor);
+            if (energyStorage > 0) {
+                if (armor.getItem() instanceof ItemBaseJetpack) {
+                    if (tag.getBoolean(TAG_HOVER)) {
+                        return !player.isOnGround() && tag.getBoolean(TAG_ENABLED);
+                    } else {
+                        return tag.getBoolean(TAG_ENABLED) && Minecraft.getInstance().options.keyJump.isDown();
+                    }
+                } else if (armor.getItem() instanceof ItemAdvancedOmniArmor) {
+                    return tag.getBoolean(TAG_GRAVITATION);
+                }
+            }
+        }
+        return false;
     }
 
     public static List<BlockPos> findPositions(BlockState state, BlockPos location, Level world, int maxRange) {

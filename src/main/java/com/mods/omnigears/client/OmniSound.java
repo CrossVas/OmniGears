@@ -1,6 +1,8 @@
 package com.mods.omnigears.client;
 
+import com.mods.omnigears.Helpers;
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
@@ -15,8 +17,8 @@ public class OmniSound extends AbstractTickableSoundInstance {
     public static final Map<Integer, OmniSound> PLAYING_FOR = Collections.synchronizedMap(new HashMap<>());
     private final Player player;
 
-    public OmniSound(Player player) {
-        super(OmniSounds.JETPACK_SOUND.get(), SoundSource.PLAYERS, player.getRandom());
+    public OmniSound(Player player, SoundEvent sound) {
+        super(sound, SoundSource.PLAYERS, player.getRandom());
         this.player = player;
         this.looping = true;
         PLAYING_FOR.put(player.getId(), this);
@@ -34,7 +36,7 @@ public class OmniSound extends AbstractTickableSoundInstance {
         this.y = (float) pos.y() - 10;
         this.z = (float) pos.z();
 
-        if (!JetpackClientHandler.isFlying(this.player)) {
+        if (!Helpers.isFlying(this.player)) {
             synchronized (PLAYING_FOR) {
                 PLAYING_FOR.remove(this.player.getId());
                 this.stop();

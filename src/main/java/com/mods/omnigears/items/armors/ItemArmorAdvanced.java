@@ -2,7 +2,7 @@ package com.mods.omnigears.items.armors;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import com.mods.omnigears.client.Keyboard;
+import com.mods.omnigears.client.keyboard.KeyboardHandler;
 import com.mods.omnigears.items.armors.base.ItemBaseElectricArmor;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -39,7 +39,7 @@ public class ItemArmorAdvanced extends ItemBaseElectricArmor {
     public void onArmorTick(ItemStack stack, Level level, Player player) {
         if (player.getItemBySlot(EquipmentSlot.LEGS).getItem() instanceof ItemArmorAdvanced) {
             if (hasEnergy(stack, this.energyPerBoost)) {
-                if (player.isSprinting() || (Keyboard.isForwardKeyDown() && Keyboard.isBoostKeyDown())) {
+                if (player.isSprinting() || (KeyboardHandler.isForwardKeyDown() && KeyboardHandler.instance.isBoostKeyDown(player))) {
                     if (ticker++ % tickRate == 0) {
                         extractEnergy(stack, this.energyPerBoost, false);
                     }

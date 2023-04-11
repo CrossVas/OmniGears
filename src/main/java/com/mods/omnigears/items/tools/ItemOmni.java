@@ -6,12 +6,13 @@ import com.google.common.base.CaseFormat;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.mods.omnigears.OmniGears;
-import com.mods.omnigears.client.Keyboard;
+import com.mods.omnigears.client.keyboard.KeyboardHandler;
 import com.mods.omnigears.Helpers;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundSource;
@@ -26,10 +27,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.Tiers;
-import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -100,9 +98,15 @@ public class ItemOmni extends EnergyContainerItem {
     public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
         OmniMode mode = getOmniMode(stack);
         OmniProps props = getOmniProps(stack);
-        tooltip.add(Helpers.formatColor(localize("info.cofh.energy") + ": " + getScaledNumber(getEnergyStored(stack)) + " / " + getScaledNumber(getMaxEnergyStored(stack)) + " RF", ChatFormatting.GRAY));
         tooltip.add(Helpers.formatComplexMessage(ChatFormatting.GOLD, "message.text.mode", mode.color, mode.name));
         tooltip.add(Helpers.formatComplexMessage(ChatFormatting.GOLD, "message.text.mode.eff", props.color, props.name));
+        tooltip.add(Helpers.formatColor(localize("info.cofh.energy") + ": " + getScaledNumber(getEnergyStored(stack)) + " / " + getScaledNumber(getMaxEnergyStored(stack)) + " RF", ChatFormatting.GRAY));
+    }
+
+    @Override
+    public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
+        if (allowedIn(group))
+            Helpers.addChargeVariants(this, items);
     }
 
     @Override
@@ -177,13 +181,13 @@ public class ItemOmni extends EnergyContainerItem {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if (!level.isClientSide()) {
-            if (Keyboard.isModeSwitchKeyDown()) {
+            if (KeyboardHandler.instance.isModeSwitchKeyDown(player)) {
                 OmniMode mode = getNextOmniMode(stack);
                 saveOmniMode(stack, mode);
                 player.displayClientMessage(Helpers.formatComplexMessage(ChatFormatting.YELLOW, "message.text.mode", mode.color, mode.name), false);
 
             }
-            if (Keyboard.isAltKeyDown()) {
+            if (KeyboardHandler.instance.isAltKeyDown(player)) {
                 OmniProps props = getNextOmniProps(stack);
                 saveOmniProps(stack, props);
                 player.displayClientMessage(Helpers.formatComplexMessage(ChatFormatting.YELLOW, "message.text.mode.eff", props.color, props.name), false);
@@ -213,7 +217,7 @@ public class ItemOmni extends EnergyContainerItem {
         Level world = context.getLevel();
         Player player = context.getPlayer();
         Direction face = context.getClickedFace();
-        if (!world.isClientSide() && !player.isCrouching() && !Keyboard.isAltKeyDown() && !Keyboard.isModeSwitchKeyDown()) {
+        if (!world.isClientSide() && !player.isCrouching() && !KeyboardHandler.instance.isAltKeyDown(player) && !KeyboardHandler.instance.isModeSwitchKeyDown(player)) {
             int torchSlot = getTorchSlot(player.getInventory());
             if (torchSlot != -1) {
                 if (face != Direction.DOWN) {
