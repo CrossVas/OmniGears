@@ -13,7 +13,7 @@ Plans:
     Mining Drill, Diamond Drill, Advanced Drill, OmniTool;
 
 ## TODO:
-    Tooltips, Missing components, recipes, compat
+    Compat Recipes
 
 ## Note
 All textures are used as a placeholder and are not final. 
