@@ -3,17 +3,13 @@ This is an attempt to fluxify one of the most iconic addon for IndustrialCraft 2
 
 Plans:
 
-## Armors: DONE!
-    Advanced Nano Chest, Advanced Quant Chest;
-## Energy Packs: DONE!
-    BatPack, Lappack, Advanced Lappack, Ultimate Lappack;
-## Jetpacks: DONE!
-    Electric Jetpack, Advanced Electric Jetpack;
-## Tools: DONE!
-    Mining Drill, Diamond Drill, Advanced Drill, OmniTool;
+-[x] Armors: Advanced Jetpack Chestplate, Advanced Omni Chestplate;
+-[x] Energy Packs: Energy Pack, Lazuli Pack, Advanced Lazuli Pack, Ultimate Lazuli Pack;
+-[x] Jetpacks: Electric Jetpack, Advanced Electric Jetpack;
+-[x] Tools: DONE! Mining Drill, Diamond Drill, Advanced Drill, OmniTool;
 
-## TODO:
-    Compat Recipes
+-[ ] TODO: Compat Recipes
 
-## Note
-All textures are used as a placeholder and are not final. 
+## Credits
+
+I don't own the idea. Full credit for the idea goes to SeNtiMeL and IC2 Dev team.
