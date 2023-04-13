@@ -1,0 +1,15 @@
+{
+  "type": "mekanism:metallurgic_infusing",
+  "chemicalInput": {
+    "amount": 80,
+    "tag": "mekanism:redstone"
+  },
+  "itemInput": {
+    "ingredient": {
+      "item": "omnigears:carbon_mesh"
+    }
+  },
+  "output": {
+    "item": "omnigears:redstone_carbon_plate"
+  }
+}

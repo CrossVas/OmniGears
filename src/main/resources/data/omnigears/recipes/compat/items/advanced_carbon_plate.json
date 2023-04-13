@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "key": {
+    "C": {
+      "item": "omnigears:redstone_carbon_plate"
+    },
+    "H": {
+      "item": "mekanism:hdpe_sheet"
+    },
+    "D": {
+      "tag": "forge:gems/diamond"
+    }
+  },
+  "pattern": [
+    "CHC",
+    "HDH",
+    "CHC"
+  ],
+  "result": {
+    "item": "omnigears:advanced_carbon_plate"
+  }
+}

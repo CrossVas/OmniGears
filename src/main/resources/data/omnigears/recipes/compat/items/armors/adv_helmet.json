@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:glass"
+    },
+    "C": {
+      "item": "omnigears:redstone_carbon_plate"
+    },
+    "T": {
+      "item": "mekanism:energy_tablet"
+    }
+  },
+  "pattern": [
+    "CTC",
+    "CGC"
+  ],
+  "result": {
+    "item": "omnigears:adv_helmet"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "#": {
+      "item": "omnigears:carbon_part"
+    }
+  },
+  "pattern": [
+    "##"
+  ],
+  "result": {
+    "item": "omnigears:carbon_mesh"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "key": {
+    "S": {
+      "item": "mekanism:hdpe_sheet"
+    },
+    "I": {
+      "item": "omnigears:advanced_carbon_plate"
+    },
+    "C": {
+      "item": "omnigears:redstone_carbon_plate"
+    }
+  },
+  "pattern": [
+    "SIS",
+    "CCC",
+    "SIS"
+  ],
+  "result": {
+    "item": "omnigears:superconductor_cover",
+    "count": 3
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "key": {
+    "L": {
+      "item": "minecraft:lapis_block"
+    },
+    "C": {
+      "tag": "forge:circuits/elite"
+    },
+    "E": {
+      "item": "omnigears:energy_pack"
+    }
+  },
+  "pattern": [
+    "LCL",
+    "LEL",
+    "L L"
+  ],
+  "result": {
+    "item": "omnigears:lazuli_pack"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "key": {
+    "C": {
+      "item": "omnigears:redstone_carbon_plate"
+    },
+    "#": {
+      "tag": "forge:circuits/elite"
+    },
+    "L": {
+      "item": "omnigears:advanced_lazuli_pack"
+    },
+    "J": {
+      "item": "omnigears:electric_jetpack"
+    },
+    "U": {
+      "item": "mekanism:ultimate_universal_cable"
+    },
+    "B": {
+      "item": "omnigears:omni_booster"
+    }
+  },
+  "pattern": [
+    "CJC",
+    "BLB",
+    "U#U"
+  ],
+  "result": {
+    "item": "omnigears:advanced_jetpack"
+  }
+}

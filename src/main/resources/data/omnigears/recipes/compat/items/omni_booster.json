@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "key": {
+    "H": {
+      "item": "mekanism:hdpe_sheet"
+    },
+    "G": {
+      "tag": "forge:dusts/glowstone"
+    },
+    "C": {
+      "item": "mekanism:advanced_control_circuit"
+    },
+    "U": {
+      "item": "mekanism:upgrade_speed"
+    },
+    "E": {
+      "item": "mekanism:electrolytic_core"
+    }
+  },
+  "pattern": [
+    "GHG",
+    "CUC",
+    "HEH"
+  ],
+  "result": {
+    "item": "omnigears:omni_booster"
+  }
+}

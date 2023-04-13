@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "key": {
+    "H": {
+      "item": "mekanism:hdpe_sheet"
+    },
+    "A": {
+      "item": "omnigears:advanced_carbon_plate"
+    },
+    "E": {
+      "item": "mekanism:electrolytic_core"
+    },
+    "O": {
+      "item": "mekanism:enriched_refined_obsidian"
+    }
+  },
+  "pattern": [
+    "HEH",
+    "OAO",
+    "HEH"
+  ],
+  "result": {
+    "item": "omnigears:omni_cooling_core"
+  }
+}

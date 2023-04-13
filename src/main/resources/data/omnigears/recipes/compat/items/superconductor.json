@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "key": {
+    "S": {
+      "item": "omnigears:superconductor_cover"
+    },
+    "G": {
+      "tag": "forge:ingots/gold"
+    },
+    "C": {
+      "item": "mekanism:ultimate_universal_cable"
+    }
+  },
+  "pattern": [
+    "SSS",
+    "CGC",
+    "SSS"
+  ],
+  "result": {
+    "item": "omnigears:superconductor",
+    "count": 3
+  }
+}

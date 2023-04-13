@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "key": {
+    "#": {
+      "tag": "forge:ingots/tin"
+    },
+    "R": {
+      "tag": "forge:dusts/redstone"
+    },
+    "A": {
+      "tag": "forge:alloys/advanced"
+    }
+  },
+  "pattern": [
+    " A ",
+    "#R#",
+    "#R#"
+  ],
+  "result": {
+    "item": "omnigears:battery_hull"
+  }
+}

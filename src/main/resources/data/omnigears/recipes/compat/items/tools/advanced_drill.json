@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "key": {
+    "C": {
+      "tag": "forge:circuits/elite"
+    },
+    "U": {
+      "item": "mekanism:upgrade_speed"
+    },
+    "D": {
+      "item": "omnigears:diamond_drill"
+    }
+  },
+  "pattern": [
+    "UDU",
+    "CUC"
+  ],
+  "result": {
+    "item": "omnigears:advanced_drill"
+  }
+}

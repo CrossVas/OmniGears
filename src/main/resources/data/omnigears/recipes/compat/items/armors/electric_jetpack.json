@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "key": {
+    "O": {
+      "tag": "forge:ingots/osmium"
+    },
+    "C": {
+      "tag": "forge:circuits/advanced"
+    },
+    "G": {
+      "tag": "forge:dusts/glowstone"
+    },
+    "E": {
+      "item": "mekanism:energy_tablet"
+    }
+  },
+  "pattern": [
+    "OCO",
+    "OEO",
+    "G G"
+  ],
+  "result": {
+    "item": "omnigears:electric_jetpack"
+  }
+}

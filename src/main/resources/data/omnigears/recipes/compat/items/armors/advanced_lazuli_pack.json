@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "key": {
+    "L": {
+      "item": "omnigears:lazuli_pack"
+    },
+    "C": {
+      "tag": "forge:circuits/elite"
+    },
+    "E": {
+      "item": "mekanism:advanced_energy_cube"
+    }
+  },
+  "pattern": [
+    "L",
+    "C",
+    "E"
+  ],
+  "result": {
+    "item": "omnigears:advanced_lazuli_pack"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "key": {
+    "I": {
+      "tag": "forge:ingots/tin"
+    },
+    "C": {
+      "tag": "forge:circuits/advanced"
+    },
+    "#": {
+      "item": "omnigears:battery_hull"
+    }
+  },
+  "pattern": [
+    "#C#",
+    "#I#",
+    "# #"
+  ],
+  "result": {
+    "item": "omnigears:energy_pack"
+  }
+}

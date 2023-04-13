@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "key": {
+    "S": {
+      "item": "omnigears:superconductor_cover"
+    },
+    "O": {
+      "tag": "forge:ingots/osmium"
+    },
+    "C": {
+      "tag": "forge:ingots/copper"
+    }
+  },
+  "pattern": [
+    "OCO",
+    "CSC",
+    "OCO"
+  ],
+  "result": {
+    "item": "omnigears:magnetron"
+  }
+}

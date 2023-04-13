@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "key": {
+    "#": {
+      "tag": "forge:ingots/iron"
+    },
+    "C": {
+      "tag": "forge:circuits/basic"
+    },
+    "B": {
+      "item": "omnigears:battery_hull"
+    }
+  },
+  "pattern": [
+    " ##",
+    "#C#",
+    "B# "
+  ],
+  "result": {
+    "item": "omnigears:chainsaw"
+  }
+}

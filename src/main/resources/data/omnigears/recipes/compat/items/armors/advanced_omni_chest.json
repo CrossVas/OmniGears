@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "key": {
+    "S": {
+      "item": "omnigears:superconductor"
+    },
+    "J": {
+      "item": "omnigears:advanced_jetpack_chest"
+    },
+    "#": {
+      "item": "omnigears:omni_engine"
+    },
+    "M": {
+      "item": "mekanism:ultimate_induction_provider"
+    },
+    "L": {
+      "item": "omnigears:ultimate_lazuli_pack"
+    }
+  },
+  "pattern": [
+    "SJS",
+    "#M#",
+    "SLS"
+  ],
+  "result": {
+    "item": "omnigears:advanced_omniarmor"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "key": {
+    "C": {
+      "item": "mekanism:ultimate_control_circuit"
+    },
+    "S": {
+      "item": "omnigears:superconductor"
+    },
+    "T": {
+      "item": "mekanism:teleportation_core"
+    },
+    "c": {
+      "item": "omnigears:omni_cooling_core"
+    }
+  },
+  "pattern": [
+    "CSC",
+    "cTc",
+    "CSC"
+  ],
+  "result": {
+    "item": "omnigears:omni_engine"
+  }
+}

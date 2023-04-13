@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "key": {
+    "C": {
+      "item": "omnigears:redstone_carbon_plate"
+    },
+    "J": {
+      "item": "omnigears:advanced_jetpack"
+    },
+    "A": {
+      "item": "omnigears:adv_chest"
+    },
+    "U": {
+      "item": "mekanism:ultimate_universal_cable"
+    },
+    "#": {
+      "tag": "forge:circuits/elite"
+    }
+  },
+  "pattern": [
+    "CJC",
+    "CAC",
+    "U#U"
+  ],
+  "result": {
+    "item": "omnigears:advanced_jetpack_chest"
+  }
+}

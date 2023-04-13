@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "key": {
+    "#": {
+      "tag": "forge:gems/diamond"
+    },
+    "C": {
+      "tag": "forge:circuits/advanced"
+    },
+    "I": {
+      "tag": "forge:ingots/osmium"
+    },
+    "D": {
+      "item": "omnigears:drill"
+    }
+  },
+  "pattern": [
+    " # ",
+    "#D#",
+    "ICI"
+  ],
+  "result": {
+    "item": "omnigears:diamond_drill"
+  }
+}

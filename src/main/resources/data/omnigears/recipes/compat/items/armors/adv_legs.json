@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "key": {
+    "C": {
+      "item": "omnigears:redstone_carbon_plate"
+    },
+    "T": {
+      "item": "mekanism:energy_tablet"
+    }
+  },
+  "pattern": [
+    "CTC",
+    "C C",
+    "C C"
+  ],
+  "result": {
+    "item": "omnigears:adv_legs"
+  }
+}
