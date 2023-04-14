@@ -1,16 +1,14 @@
 package com.mods.omnigears.items.tools;
 
-import cofh.core.item.EnergyContainerItem;
 import cofh.lib.util.Utils;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
-import com.mods.omnigears.OmniGears;
-import com.mods.omnigears.client.keyboard.KeyboardHandler;
 import com.mods.omnigears.Helpers;
+import com.mods.omnigears.client.keyboard.KeyboardHandler;
+import com.mods.omnigears.items.ItemBaseElectricItem;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.stats.Stats;
@@ -26,7 +24,10 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.Tiers;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -48,10 +49,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
 
-import static cofh.lib.util.helpers.StringHelper.getScaledNumber;
-import static cofh.lib.util.helpers.StringHelper.localize;
-
-public class ItemSaw extends EnergyContainerItem {
+public class ItemSaw extends ItemBaseElectricItem {
 
     public static final Set<ToolAction> DEFAULT_ACTIONS = toolActions(ToolActions.AXE_DIG, ToolActions.AXE_STRIP, ToolActions.AXE_SCRAPE, ToolActions.AXE_WAX_OFF, ToolActions.SHEARS_DIG, ToolActions.SHEARS_HARVEST);
     public static final Set<Material> MATERIALS = new ObjectOpenHashSet<>();
@@ -91,44 +89,13 @@ public class ItemSaw extends EnergyContainerItem {
     }
 
     public ItemSaw() {
-        super(new Properties().setNoRepair().tab(OmniGears.TAB).stacksTo(1), 40000, 500, 500);
+        super(40000, 500);
         this.ENERGY_PER_USE = 200;
         this.EFFICIENCY = 8.0F;
     }
 
-    public ItemSaw(int maxEnergy, int extract, int receive) {
-        super(new Properties().setNoRepair().tab(OmniGears.TAB).stacksTo(1), maxEnergy, extract, receive);
-    }
-
-    @Override
-    public int getBarColor(ItemStack stack) {
-        return 0x00FF00;
-    }
-
-    @Override
-    public int getExtract(ItemStack container) {
-        return this.extract;
-    }
-
-    @Override
-    public int getReceive(ItemStack container) {
-        return this.receive;
-    }
-
-    @Override
-    public int getMaxEnergyStored(ItemStack container) {
-        return this.maxEnergy;
-    }
-
-    @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-        tooltip.add(Helpers.formatColor(localize("info.cofh.energy") + ": " + getScaledNumber(getEnergyStored(stack)) + " / " + getScaledNumber(getMaxEnergyStored(stack)) + " RF", ChatFormatting.GRAY));
-    }
-
-    @Override
-    public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
-        if (allowedIn(group))
-            Helpers.addChargeVariants(this, items);
+    public ItemSaw(int maxEnergy, int transfer) {
+        super(maxEnergy, transfer);
     }
 
     @Override
@@ -235,7 +202,7 @@ public class ItemSaw extends EnergyContainerItem {
         public static final String SHEAR_TAG = "shears";
 
         public ItemAdvancedSaw() {
-            super(120000, 1000, 1000);
+            super(120000, 1000);
             this.ENERGY_PER_USE = 400;
             this.EFFICIENCY = 35.0F;
         }
@@ -246,12 +213,12 @@ public class ItemSaw extends EnergyContainerItem {
         }
 
         @Override
-        public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flagIn) {
+        public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flagIn) {
             boolean isShearsOn = getChainsawMode(stack);
             String status = isShearsOn ? "message.text.on" : "message.text.off";
             ChatFormatting color = isShearsOn ? ChatFormatting.GREEN : ChatFormatting.RED;
             tooltip.add(Helpers.formatComplexMessage(ChatFormatting.GOLD, "message.text.mode.shears", color, status));
-            super.appendHoverText(stack, world, tooltip, flagIn);
+            super.appendHoverText(stack, level, tooltip, flagIn);
         }
 
         public boolean getChainsawMode(ItemStack stack) {

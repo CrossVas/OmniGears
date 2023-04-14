@@ -1,5 +1,6 @@
 package com.mods.omnigears;
 
+import com.mods.omnigears.items.ItemBaseElectricItem;
 import com.mods.omnigears.items.ItemComponents;
 import com.mods.omnigears.items.armors.*;
 import com.mods.omnigears.items.tools.ItemDrill;
@@ -15,13 +16,13 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class OmniGearsObjects {
 
     // Components
-    public static Item OMNI_COOLING_CORE, OMNI_BOOSTER, OMNI_ENGINE, MAGNETRON, SUPERCONDUCTOR, SUPERCONDUCTOR_COVER, OMNITOOL_CORE, CARBON_PART, CARBON_MESH, REDSTONE_CARBON_PLATE, ADVANCED_CARBON_PLATE, BATTERY_HULL;
+    public static Item OMNI_COOLING_CORE, OMNI_BOOSTER, OMNI_ENGINE, MAGNETRON, SUPERCONDUCTOR, SUPERCONDUCTOR_COVER, OMNITOOL_CORE, CARBON_PART, CARBON_MESH, REDSTONE_CARBON_PLATE, ADVANCED_CARBON_PLATE;
 
     // Tools
     public static Item DRILL, DIAMOND_DRILL, ADVANCED_DRILL, CHAINSAW, ADVANCED_CHAINSAW, OMNITOOL;
 
     // Energy Packs
-    public static Item ENERGY_PACK, LAZULI_PACK, ADVANCED_LAZULI_PACK, ULTIMATE_LAZULI_PACK;
+    public static Item ENERGY_PACK, LAZULI_PACK, ADVANCED_LAZULI_PACK, ULTIMATE_LAZULI_PACK, BATTERY, ENERGIZED_DIAMOND;
 
     // Jetpacks
     public static Item JETPACK, ADVANCED_JETPACK, ADVANCED_JETPACK_CHEST, ADVANCED_OMNI_ARMOR;
@@ -30,7 +31,6 @@ public class OmniGearsObjects {
     public static Item ADV_HELMET, ADV_CHEST, ADV_LEGS, ADV_BOOTS;
 
     public static void init() {
-        BATTERY_HULL = registerItem(new ItemComponents(), "battery_hull");
         CARBON_PART = registerItem(new ItemComponents(), "carbon_part");
         CARBON_MESH = registerItem(new ItemComponents(), "carbon_mesh");
         REDSTONE_CARBON_PLATE = registerItem(new ItemComponents(), "redstone_carbon_plate");
@@ -42,9 +42,11 @@ public class OmniGearsObjects {
         OMNI_ENGINE = registerItem(new ItemComponents(), "omni_engine");
         OMNITOOL_CORE = registerItem(new ItemComponents(), "omnitool_core");
         OMNI_COOLING_CORE = registerItem(new ItemComponents(), "omni_cooling_core");
+        BATTERY = registerItem(new ItemBaseElectricItem(40000, 500), "omni_battery");
+        ENERGIZED_DIAMOND = registerItem(new ItemBaseElectricItem(400000, 5000), "energized_diamond");
 
         DRILL = registerItem(new ItemDrill(), "drill");
-        DIAMOND_DRILL = registerItem(new ItemDrill(Tiers.DIAMOND, 1000, 40000), "diamond_drill");
+        DIAMOND_DRILL = registerItem(new ItemDrill(Tiers.DIAMOND, 40000, 1000), "diamond_drill");
         ADVANCED_DRILL = registerItem(new ItemDrill.ItemAdvancedDrill(), "advanced_drill");
         CHAINSAW = registerItem(new ItemSaw(), "chainsaw");
         ADVANCED_CHAINSAW = registerItem(new ItemSaw.ItemAdvancedSaw(), "advanced_chainsaw");
@@ -69,6 +71,4 @@ public class OmniGearsObjects {
         ForgeRegistries.ITEMS.register(id, item);
         return item;
     }
-
-
 }

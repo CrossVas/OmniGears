@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "omnigears:item/battery_hull"
+    "layer0": "omnigears:item/energized_diamond"
   }
 }

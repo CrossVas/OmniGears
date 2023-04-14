@@ -1,18 +1,16 @@
 package com.mods.omnigears.items.tools;
 
-import cofh.core.item.EnergyContainerItem;
 import cofh.lib.util.Utils;
 import com.google.common.base.CaseFormat;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
-import com.mods.omnigears.OmniGears;
-import com.mods.omnigears.client.keyboard.KeyboardHandler;
 import com.mods.omnigears.Helpers;
+import com.mods.omnigears.client.keyboard.KeyboardHandler;
+import com.mods.omnigears.items.ItemBaseElectricItem;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundSource;
@@ -27,7 +25,10 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.Tiers;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -41,9 +42,6 @@ import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.TierSortingRegistry;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.energy.IEnergyStorage;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.IdentityHashMap;
@@ -52,10 +50,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
 
-import static cofh.lib.util.helpers.StringHelper.getScaledNumber;
-import static cofh.lib.util.helpers.StringHelper.localize;
-
-public class ItemOmni extends EnergyContainerItem {
+public class ItemOmni extends ItemBaseElectricItem {
 
     public static final Set<ToolAction> DEFAULT_TOOL_ACTIONS = toolActions(ToolActions.PICKAXE_DIG, ToolActions.SHOVEL_DIG, ToolActions.AXE_DIG);
     public static final Set<Enchantment> VALID_ENCHANTS = new ObjectOpenHashSet<>();
@@ -85,43 +80,17 @@ public class ItemOmni extends EnergyContainerItem {
     public int ENERGY_PER_USAGE;
 
     public ItemOmni() {
-        super(new Properties().setNoRepair().stacksTo(1).tab(OmniGears.TAB), 1000000, 50000, 50000);
+        super(1000000, 50000);
         this.EFFICIENCY = 1.0F;
     }
 
     @Override
-    public int getBarColor(ItemStack stack) {
-        return 0x00FF00;
-    }
-
-    @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flagIn) {
         OmniMode mode = getOmniMode(stack);
         OmniProps props = getOmniProps(stack);
         tooltip.add(Helpers.formatComplexMessage(ChatFormatting.GOLD, "message.text.mode", mode.color, mode.name));
         tooltip.add(Helpers.formatComplexMessage(ChatFormatting.GOLD, "message.text.mode.eff", props.color, props.name));
-        tooltip.add(Helpers.formatColor(localize("info.cofh.energy") + ": " + getScaledNumber(getEnergyStored(stack)) + " / " + getScaledNumber(getMaxEnergyStored(stack)) + " RF", ChatFormatting.GRAY));
-    }
-
-    @Override
-    public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
-        if (allowedIn(group))
-            Helpers.addChargeVariants(this, items);
-    }
-
-    @Override
-    public int getExtract(ItemStack container) {
-        return this.extract;
-    }
-
-    @Override
-    public int getReceive(ItemStack container) {
-        return this.receive;
-    }
-
-    @Override
-    public int getMaxEnergyStored(ItemStack container) {
-        return this.maxEnergy;
+        super.appendHoverText(stack, level, tooltip, flagIn);
     }
 
     public static OmniMode getOmniMode(ItemStack drill) {
@@ -324,10 +293,6 @@ public class ItemOmni extends EnergyContainerItem {
         return getEnergyStored(stack) >= ENERGY_PER_USAGE;
     }
 
-    @Override
-    public Capability<? extends IEnergyStorage> getEnergyCapability() {
-        return ForgeCapabilities.ENERGY;
-    }
 
     public enum OmniMode {
         NORMAL(ChatFormatting.LIGHT_PURPLE), VEIN(ChatFormatting.BLUE), VEIN_EXTENDED(ChatFormatting.RED);

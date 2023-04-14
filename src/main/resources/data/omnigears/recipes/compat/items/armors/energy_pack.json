@@ -14,7 +14,7 @@
       "tag": "forge:circuits/advanced"
     },
     "#": {
-      "item": "omnigears:battery_hull"
+      "item": "omnigears:omni_battery"
     }
   },
   "pattern": [

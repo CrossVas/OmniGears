@@ -1,0 +1,15 @@
+{
+  "type": "mekanism:metallurgic_infusing",
+  "chemicalInput": {
+    "amount": 80,
+    "tag": "mekanism:redstone"
+  },
+  "itemInput": {
+    "ingredient": {
+      "item": "minecraft:diamond"
+    }
+  },
+  "output": {
+    "item": "omnigears:energized_diamond"
+  }
+}

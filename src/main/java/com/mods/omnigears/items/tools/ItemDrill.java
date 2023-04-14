@@ -1,17 +1,15 @@
 package com.mods.omnigears.items.tools;
 
-import cofh.core.item.EnergyContainerItem;
 import cofh.lib.util.Utils;
 import com.google.common.base.CaseFormat;
 import com.google.common.collect.ImmutableList;
-import com.mods.omnigears.OmniGears;
-import com.mods.omnigears.client.keyboard.KeyboardHandler;
 import com.mods.omnigears.Helpers;
+import com.mods.omnigears.client.keyboard.KeyboardHandler;
+import com.mods.omnigears.items.ItemBaseElectricItem;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundSource;
@@ -37,9 +35,6 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.common.TierSortingRegistry;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.energy.IEnergyStorage;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -47,10 +42,7 @@ import java.util.Set;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-import static cofh.lib.util.helpers.StringHelper.getScaledNumber;
-import static cofh.lib.util.helpers.StringHelper.localize;
-
-public class ItemDrill extends EnergyContainerItem {
+public class ItemDrill extends ItemBaseElectricItem {
 
     public static final Set<ToolAction> DEFAULT_TOOL_ACTIONS = toolActions(ToolActions.PICKAXE_DIG, ToolActions.SHOVEL_DIG);
     public static final Set<Material> MATERIALS = new ObjectOpenHashSet<>();
@@ -71,49 +63,22 @@ public class ItemDrill extends EnergyContainerItem {
     }
 
     public ItemDrill() {
-        super(new Properties().setNoRepair().tab(OmniGears.TAB).stacksTo(1), 40000, 500, 500);
+        super(40000, 500);
         this.TIER = Tiers.IRON;
         this.ENERGY_PER_USE = 200;
         this.EFFICIENCY = 8.0F;
     }
 
-    public ItemDrill(Tier tier, int transfer, int capacity) {
-        super(new Properties().setNoRepair().tab(OmniGears.TAB), capacity, transfer, transfer);
+    public ItemDrill(Tier tier, int maxEnergy, int transfer) {
+        super(maxEnergy, transfer);
         this.extract = transfer;
         this.receive = transfer;
-        this.maxEnergy = capacity;
+        this.maxEnergy = maxEnergy;
         this.TIER = tier;
         this.ENERGY_PER_USE = 320;
         this.EFFICIENCY = 16.0F;
     }
 
-    @Override
-    public int getBarColor(ItemStack stack) {
-        return 0x00FF00;
-    }
-
-    @Override
-    public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
-        //Ignore NBT for energized items causing re-equip animations
-        return oldStack.getItem() != newStack.getItem();
-    }
-
-    @Override
-    public boolean shouldCauseBlockBreakReset(ItemStack oldStack, ItemStack newStack) {
-        //Ignore NBT for energized items causing block break reset
-        return oldStack.getItem() != newStack.getItem();
-    }
-
-    @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-        tooltip.add(Helpers.formatColor(localize("info.cofh.energy") + ": " + getScaledNumber(getEnergyStored(stack)) + " / " + getScaledNumber(getMaxEnergyStored(stack)) + " RF", ChatFormatting.GRAY));
-    }
-
-    @Override
-    public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
-        if (allowedIn(group))
-            Helpers.addChargeVariants(this, items);
-    }
 
     @Override
     public InteractionResult useOn(UseOnContext context) {
@@ -203,21 +168,6 @@ public class ItemDrill extends EnergyContainerItem {
     }
 
     @Override
-    public Capability<? extends IEnergyStorage> getEnergyCapability() {
-        return ForgeCapabilities.ENERGY;
-    }
-
-    @Override
-    public int getExtract(ItemStack container) {
-        return this.extract;
-    }
-
-    @Override
-    public int getReceive(ItemStack container) {
-        return this.receive;
-    }
-
-    @Override
     public int getMaxEnergyStored(ItemStack container) {
         return this.maxEnergy;
     }
@@ -236,7 +186,7 @@ public class ItemDrill extends EnergyContainerItem {
         public static String TAG_PROPS = "toolProps";
 
         public ItemAdvancedDrill() {
-            super(Tiers.NETHERITE, 5000, 120000);
+            super(Tiers.NETHERITE, 120000, 5000);
             this.EFFICIENCY = 1.0F;
         }
 
@@ -276,12 +226,12 @@ public class ItemDrill extends EnergyContainerItem {
         }
 
         @Override
-        public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+        public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flagIn) {
             DrillMode mode = getDrillMode(stack);
             DrillProps props = getDrillProps(stack);
             tooltip.add(Helpers.formatComplexMessage(ChatFormatting.GOLD, "message.text.mode", mode.color, mode.name));
             tooltip.add(Helpers.formatComplexMessage(ChatFormatting.GOLD, "message.text.mode.eff", props.color, props.name));
-            super.appendHoverText(stack, worldIn, tooltip, flagIn);
+            super.appendHoverText(stack, level, tooltip, flagIn);
         }
 
         @Override

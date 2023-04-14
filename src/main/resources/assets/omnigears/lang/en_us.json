@@ -5,7 +5,8 @@
   "key.alt.name": "Alt Key",
   "key.boost.name": "Boost Key",
 
-  "item.omnigears.battery_hull": "Battery Hull",
+  "item.omnigears.omni_battery": "Omni Battery",
+  "item.omnigears.energized_diamond": "Energized Diamond",
   "item.omnigears.omni_cooling_core": "Omni Cooling Core",
   "item.omnigears.omni_booster": "Omni Booster Module",
   "item.omnigears.omni_engine": "Omni Engine",
