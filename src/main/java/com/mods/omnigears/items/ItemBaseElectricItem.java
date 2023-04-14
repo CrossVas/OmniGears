@@ -22,12 +22,11 @@ import static cofh.lib.util.helpers.StringHelper.localize;
 
 public class ItemBaseElectricItem extends EnergyContainerItem {
 
-    int maxCapacity, transfer;
-
     public ItemBaseElectricItem(int maxCapacity, int transfer) {
-        super(new Properties().setNoRepair().tab(OmniGears.TAB).stacksTo(1), maxCapacity, transfer, transfer);
-        this.maxCapacity = maxCapacity;
-        this.transfer = transfer;
+        super(new Properties().setNoRepair().tab(OmniGears.TAB).stacksTo(1), maxCapacity, transfer);
+        this.maxEnergy = maxCapacity;
+        this.extract = transfer;
+        this.receive = transfer;
     }
 
     @Override
@@ -42,18 +41,6 @@ public class ItemBaseElectricItem extends EnergyContainerItem {
     }
 
     @Override
-    public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
-        //Ignore NBT for energized items causing re-equip animations
-        return oldStack.getItem() != newStack.getItem();
-    }
-
-    @Override
-    public boolean shouldCauseBlockBreakReset(ItemStack oldStack, ItemStack newStack) {
-        //Ignore NBT for energized items causing block break reset
-        return oldStack.getItem() != newStack.getItem();
-    }
-
-    @Override
     public int getBarColor(ItemStack stack) {
         return 0x00FF00;
     }
@@ -65,16 +52,16 @@ public class ItemBaseElectricItem extends EnergyContainerItem {
 
     @Override
     public int getExtract(ItemStack container) {
-        return this.transfer;
+        return this.extract;
     }
 
     @Override
     public int getReceive(ItemStack container) {
-        return this.transfer;
+        return this.receive;
     }
 
     @Override
     public int getMaxEnergyStored(ItemStack container) {
-        return this.maxCapacity;
+        return this.maxEnergy;
     }
 }

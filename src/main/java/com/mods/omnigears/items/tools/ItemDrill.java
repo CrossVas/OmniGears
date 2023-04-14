@@ -17,6 +17,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -78,7 +79,6 @@ public class ItemDrill extends ItemBaseElectricItem {
         this.ENERGY_PER_USE = 320;
         this.EFFICIENCY = 16.0F;
     }
-
 
     @Override
     public InteractionResult useOn(UseOnContext context) {
@@ -242,7 +242,6 @@ public class ItemDrill extends ItemBaseElectricItem {
                     DrillMode mode = getNextDrillMode(stack);
                     saveDrillMode(stack, mode);
                     player.displayClientMessage(Helpers.formatComplexMessage(ChatFormatting.YELLOW, "message.text.mode", mode.color, mode.name), false);
-
                 }
                 if (KeyboardHandler.instance.isAltKeyDown(player)) {
                     DrillProps props = getNextDrillProps(stack);
