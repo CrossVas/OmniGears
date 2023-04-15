@@ -1,9 +1,14 @@
+![](items.png)
+
+
+
 ## OmniGears
+
 This is an attempt to fluxify one of the most iconic addon for IndustrialCraft 2 - GravitationSuite.
 
-Plans:
+Contains:
 
-- Armors: Advanced Jetpack Chestplate, Advanced Omni Chestplate;
+- Armors: Advanced Armor Set, Advanced Jetpack Chestplate, Advanced Omni Chestplate;
 
 - Energy Packs: Energy Pack, Lazuli Pack, Advanced Lazuli Pack, Ultimate Lazuli Pack;
 
@@ -11,7 +16,10 @@ Plans:
 
 - Tools: Mining Drill, Diamond Drill, Advanced Drill, OmniTool;
 
-- TODO: Compat Recipes
+- Compat: Mekanism, more to come
+
+## Requires 
+Forge, CoFH Core 
 
 ## Credits
 
