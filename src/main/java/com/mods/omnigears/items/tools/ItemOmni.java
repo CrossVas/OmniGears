@@ -85,6 +85,16 @@ public class ItemOmni extends ItemBaseElectricItem {
     }
 
     @Override
+    public Rarity getRarity(ItemStack stack) {
+        return Rarity.RARE;
+    }
+
+    @Override
+    public boolean isFoil(ItemStack stack) {
+        return false;
+    }
+
+    @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flagIn) {
         OmniMode mode = getOmniMode(stack);
         OmniProps props = getOmniProps(stack);
@@ -124,11 +134,6 @@ public class ItemOmni extends ItemBaseElectricItem {
     }
 
     @Override
-    public Rarity getRarity(ItemStack stack) {
-        return Rarity.RARE;
-    }
-
-    @Override
     public boolean onBlockStartBreak(ItemStack stack, BlockPos pos, Player player) {
         OmniMode mode = getOmniMode(stack);
         OmniProps props = getOmniProps(stack);
@@ -150,13 +155,13 @@ public class ItemOmni extends ItemBaseElectricItem {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if (!level.isClientSide()) {
-            if (KeyboardHandler.instance.isModeSwitchKeyDown(player)) {
+            if (KeyboardHandler.isModeKeyDown()) {
                 OmniMode mode = getNextOmniMode(stack);
                 saveOmniMode(stack, mode);
                 player.displayClientMessage(Helpers.formatComplexMessage(ChatFormatting.YELLOW, "message.text.mode", mode.color, mode.name), false);
 
             }
-            if (KeyboardHandler.instance.isAltKeyDown(player)) {
+            if (KeyboardHandler.isAltKeyDown()) {
                 OmniProps props = getNextOmniProps(stack);
                 saveOmniProps(stack, props);
                 player.displayClientMessage(Helpers.formatComplexMessage(ChatFormatting.YELLOW, "message.text.mode.eff", props.color, props.name), false);
@@ -186,7 +191,7 @@ public class ItemOmni extends ItemBaseElectricItem {
         Level world = context.getLevel();
         Player player = context.getPlayer();
         Direction face = context.getClickedFace();
-        if (!world.isClientSide() && !player.isCrouching() && !KeyboardHandler.instance.isAltKeyDown(player) && !KeyboardHandler.instance.isModeSwitchKeyDown(player)) {
+        if (!world.isClientSide() && !player.isCrouching() && !KeyboardHandler.isAltKeyDown() && !KeyboardHandler.isModeKeyDown()) {
             int torchSlot = getTorchSlot(player.getInventory());
             if (torchSlot != -1) {
                 if (face != Direction.DOWN) {

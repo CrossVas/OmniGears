@@ -39,7 +39,7 @@ public class ItemArmorAdvanced extends ItemBaseElectricArmor {
     public void onArmorTick(ItemStack stack, Level level, Player player) {
         if (player.getItemBySlot(EquipmentSlot.LEGS).getItem() instanceof ItemArmorAdvanced) {
             if (hasEnergy(stack, this.energyPerBoost)) {
-                if (player.isSprinting() || (KeyboardHandler.isForwardKeyDown() && KeyboardHandler.instance.isBoostKeyDown(player))) {
+                if (player.isSprinting() || (KeyboardHandler.isForwardKeyDown() && KeyboardHandler.isBoostKeyDown())) {
                     if (ticker++ % tickRate == 0) {
                         extractEnergy(stack, this.energyPerBoost, false);
                     }

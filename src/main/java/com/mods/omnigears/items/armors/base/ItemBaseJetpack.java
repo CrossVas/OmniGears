@@ -64,14 +64,14 @@ public class ItemBaseJetpack extends ItemBaseElectricArmor implements IEnergyPac
             if (jetpackTicker > 0) {
                 --jetpackTicker;
                 tag.putByte(TAG_JET_TICKER, jetpackTicker);
-            } else if (KeyboardHandler.instance.isToggleKeyDown(player)) {
+            } else if (KeyboardHandler.isFlyKeyDown()) {
                 tag.putByte(TAG_JET_TICKER, (byte) 5);
                 tag.putBoolean(TAG_ENABLED, true);
                 if (server) {
                     player.displayClientMessage(Helpers.formatComplexMessage(ChatFormatting.YELLOW, "message.text.jetpack.engine", ChatFormatting.GREEN, "message.text.on"), false);
                 }
             }
-        } else if (KeyboardHandler.instance.isToggleKeyDown(player) && jetpackTicker <= 0) {
+        } else if (KeyboardHandler.isFlyKeyDown() && jetpackTicker <= 0) {
             tag.putByte(TAG_JET_TICKER, (byte) 5);
             tag.putBoolean(TAG_ENABLED, false);
             if (server) {
@@ -98,7 +98,7 @@ public class ItemBaseJetpack extends ItemBaseElectricArmor implements IEnergyPac
 
             boolean isHover = tag.getBoolean(TAG_HOVER);
 
-            if (Minecraft.getInstance().options.keyJump.isDown() && KeyboardHandler.instance.isModeSwitchKeyDown(player) && !KeyboardHandler.instance.isAltKeyDown(player) && toggleTimer <= 0) {
+            if (Minecraft.getInstance().options.keyJump.isDown() && KeyboardHandler.isModeKeyDown() && !KeyboardHandler.isAltKeyDown() && toggleTimer <= 0) {
                 toggleTimer = 10;
                 changeHoverMode(stack, player);
             }
@@ -153,7 +153,7 @@ public class ItemBaseJetpack extends ItemBaseElectricArmor implements IEnergyPac
                 float friction = 0F;
 
                 if (forwardPower > 0.0F) {
-                    if (canProvideBoost(stack) && KeyboardHandler.instance.isBoostKeyDown(player)) {
+                    if (canProvideBoost(stack) && KeyboardHandler.isBoostKeyDown()) {
                         usageMultiplier = 3;
                         if (hover) {
                             friction = 0.18F;
@@ -187,7 +187,7 @@ public class ItemBaseJetpack extends ItemBaseElectricArmor implements IEnergyPac
             if (hover) {
                 float maxHoverY = 0F;
                 int boostMultiplier = 1;
-                if (canProvideBoost(stack) && KeyboardHandler.instance.isBoostKeyDown(player)) {
+                if (canProvideBoost(stack) && KeyboardHandler.isBoostKeyDown()) {
                     boostMultiplier = 4;
                 }
                 if (!player.isShiftKeyDown() || !Minecraft.getInstance().options.keyJump.isDown()) {

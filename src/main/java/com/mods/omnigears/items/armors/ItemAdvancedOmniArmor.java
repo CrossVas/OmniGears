@@ -117,7 +117,7 @@ public class ItemAdvancedOmniArmor extends ItemBaseElectricArmor implements IPro
             tag.putByte(TICKER, engineTicker);
         }
 
-        if (KeyboardHandler.instance.isToggleKeyDown(player) && !Minecraft.getInstance().isPaused() && engineTicker <= 0) {
+        if (KeyboardHandler.isFlyKeyDown() && !Minecraft.getInstance().isPaused() && engineTicker <= 0) {
             tag.putByte(TICKER, (byte) 5);
             if (!enabled) {
                 tag.putBoolean(TAG_GRAVITATION, true);
@@ -149,7 +149,7 @@ public class ItemAdvancedOmniArmor extends ItemBaseElectricArmor implements IPro
                 }
             }
 
-            if (KeyboardHandler.isJumpKeyDown() && KeyboardHandler.instance.isModeSwitchKeyDown(player) && engineTicker <= 0) {
+            if (KeyboardHandler.isJumpKeyDown() && KeyboardHandler.isModeKeyDown() && engineTicker <= 0) {
                 tag.putByte(TICKER, (byte) 5);
                 if (tag.getBoolean(TAG_LEVITATION)) {
                     saveWorkMode(stack, false);

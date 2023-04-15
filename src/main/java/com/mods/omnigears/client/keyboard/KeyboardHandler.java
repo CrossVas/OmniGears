@@ -2,7 +2,6 @@ package com.mods.omnigears.client.keyboard;
 
 import com.mods.omnigears.Refs;
 import net.minecraft.client.Minecraft;
-import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
@@ -25,22 +24,20 @@ public class KeyboardHandler {
         }
     }
 
-    public static KeyboardHandler instance = new KeyboardHandler();
-
-    public boolean isModeSwitchKeyDown(Player player) {
-        return this.getHandler(player).isKeyPressed(OmniKeys.MODE_KEY);
+    public static boolean isModeKeyDown() {
+        return OmniKeys.MODE_KEY.isDown();
     }
 
-    public boolean isToggleKeyDown(Player player) {
-        return this.getHandler(player).isKeyPressed(OmniKeys.TOGGLE_KEY);
+    public static boolean isFlyKeyDown() {
+        return OmniKeys.TOGGLE_KEY.isDown();
     }
 
-    public boolean isAltKeyDown(Player player) {
-        return this.getHandler(player).isKeyPressed(OmniKeys.ALT_KEY);
+    public static boolean isBoostKeyDown() {
+        return OmniKeys.BOOST_KEY.isDown();
     }
 
-    public boolean isBoostKeyDown(Player player) {
-        return this.getHandler(player).isKeyPressed(OmniKeys.BOOST_KEY);
+    public static boolean isAltKeyDown() {
+        return OmniKeys.ALT_KEY.isDown();
     }
 
     public static boolean isJumpKeyDown() {
@@ -49,9 +46,5 @@ public class KeyboardHandler {
 
     public static boolean isForwardKeyDown() {
         return Minecraft.getInstance().options.keyUp.isDown();
-    }
-
-    public PlayerHandler getHandler(Player player) {
-        return PlayerHandler.getHandler(player);
     }
 }

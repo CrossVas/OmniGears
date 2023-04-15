@@ -17,7 +17,6 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -86,7 +85,7 @@ public class ItemDrill extends ItemBaseElectricItem {
         Level world = context.getLevel();
         Player player = context.getPlayer();
         Direction face = context.getClickedFace();
-        if (!world.isClientSide() && !player.isCrouching() && !KeyboardHandler.instance.isAltKeyDown(player) && !KeyboardHandler.instance.isModeSwitchKeyDown(player)) {
+        if (!world.isClientSide() && !player.isCrouching() && !KeyboardHandler.isAltKeyDown() && !KeyboardHandler.isModeKeyDown()) {
             int torchSlot = getTorchSlot(player.getInventory());
             if (torchSlot != -1) {
                 if (face != Direction.DOWN) {
@@ -238,12 +237,12 @@ public class ItemDrill extends ItemBaseElectricItem {
         public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
             ItemStack stack = player.getItemInHand(hand);
             if (!level.isClientSide()) {
-                if (KeyboardHandler.instance.isModeSwitchKeyDown(player)) {
+                if (KeyboardHandler.isModeKeyDown()) {
                     DrillMode mode = getNextDrillMode(stack);
                     saveDrillMode(stack, mode);
                     player.displayClientMessage(Helpers.formatComplexMessage(ChatFormatting.YELLOW, "message.text.mode", mode.color, mode.name), false);
                 }
-                if (KeyboardHandler.instance.isAltKeyDown(player)) {
+                if (KeyboardHandler.isAltKeyDown()) {
                     DrillProps props = getNextDrillProps(stack);
                     saveDrillProps(stack, props);
                     player.displayClientMessage(Helpers.formatComplexMessage(ChatFormatting.YELLOW, "message.text.mode.eff", props.color, props.name), false);

@@ -246,7 +246,7 @@ public class ItemSaw extends ItemBaseElectricItem {
         public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
             ItemStack stack = player.getItemInHand(hand);
             if (!level.isClientSide()) {
-                if (KeyboardHandler.instance.isModeSwitchKeyDown(player)) {
+                if (KeyboardHandler.isModeKeyDown()) {
                     changeChainsawMode(stack, player);
                 }
                 return InteractionResultHolder.success(stack);
