@@ -302,7 +302,8 @@ public class ItemDrill extends ItemBaseElectricItem {
             BlockState offsetState = world.getBlockState(offset);
             float alphaStrength = originState.getDestroySpeed(world, origin);
             float strength = offsetState.getDestroySpeed(world, offset);
-            return strength > 0.0F && alphaStrength / strength <= 10.0F;
+            boolean canMineMaterial = MATERIALS.contains(originState.getMaterial()) && MATERIALS.contains(offsetState.getMaterial());
+            return (canMineMaterial || (originState.is(BlockTags.MINEABLE_WITH_PICKAXE) || originState.is(BlockTags.MINEABLE_WITH_SHOVEL))) && (offsetState.is(BlockTags.MINEABLE_WITH_PICKAXE) || offsetState.is(BlockTags.MINEABLE_WITH_SHOVEL)) && strength > 0.0F && strength / alphaStrength <= 5.0F;
         }
 
         public enum DrillMode {
