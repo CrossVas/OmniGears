@@ -5,6 +5,9 @@ import cofh.lib.energy.EnergyContainerItemWrapper;
 import cofh.lib.util.helpers.StringHelper;
 import com.mods.omnigears.Helpers;
 import com.mods.omnigears.OmniGears;
+import com.mods.omnigears.items.armors.intefaces.IEnergyProvider;
+import com.mods.omnigears.items.armors.intefaces.IOverlayProvider;
+import com.mods.omnigears.items.armors.intefaces.IProtectionProvider;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
@@ -26,7 +29,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class ItemBaseElectricArmor extends ArmorItem implements IEnergyContainerItem, IEnergyPack, IProtectionProvider {
+public class ItemBaseElectricArmor extends ArmorItem implements IEnergyContainerItem, IEnergyProvider, IProtectionProvider, IOverlayProvider {
 
     public int capacity, transfer;
     public byte ticker, tickRate = 10;
@@ -51,7 +54,7 @@ public class ItemBaseElectricArmor extends ArmorItem implements IEnergyContainer
             if (player.getItemBySlot(EquipmentSlot.CHEST) == stack) {
                 int extract = this.getExtract(stack);
                 for (ItemStack item : player.getInventory().items) {
-                    if (!(item.getItem() instanceof IEnergyPack) && canProvideEnergy(stack)) {
+                    if (!(item.getItem() instanceof IEnergyProvider) && canProvideEnergy(stack)) {
                         item.getCapability(ForgeCapabilities.ENERGY, null).ifPresent(e ->
                                 this.extractEnergy(stack, e.receiveEnergy(Math.min(extract, this.getEnergyStored(stack)), false), player.getAbilities().instabuild));
                     }

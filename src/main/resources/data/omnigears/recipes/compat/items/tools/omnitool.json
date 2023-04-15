@@ -1,0 +1,28 @@
+{
+  "type": "omnigears:omni_recipe",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "key": {
+    "#": {
+      "tag": "forge:ingots/steel"
+    },
+    "C": {
+      "tag": "forge:circuits/basic"
+    },
+    "B": {
+      "item": "omnigears:omni_battery"
+    }
+  },
+  "pattern": [
+    " # ",
+    "#C#",
+    "#B#"
+  ],
+  "result": {
+    "item": "omnigears:omnitool"
+  }
+}

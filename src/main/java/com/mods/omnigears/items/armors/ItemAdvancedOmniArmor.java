@@ -3,7 +3,7 @@ package com.mods.omnigears.items.armors;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.mods.omnigears.client.keyboard.KeyboardHandler;
-import com.mods.omnigears.items.armors.base.IProtectionProvider;
+import com.mods.omnigears.items.armors.intefaces.IProtectionProvider;
 import com.mods.omnigears.items.armors.base.ItemBaseElectricArmor;
 import com.mods.omnigears.Helpers;
 import net.minecraft.ChatFormatting;
@@ -29,8 +29,8 @@ import java.util.function.Consumer;
 
 public class ItemAdvancedOmniArmor extends ItemBaseElectricArmor implements IProtectionProvider {
 
-    public boolean gravitation;
-    public boolean levitation;
+    public static boolean gravitation;
+    public static boolean levitation;
     public static final String TAG_GRAVITATION = "enabled";
     public static final String TAG_LEVITATION = "levitation";
     public static final String TICKER = "ticker";
@@ -119,23 +119,7 @@ public class ItemAdvancedOmniArmor extends ItemBaseElectricArmor implements IPro
 
         if (KeyboardHandler.isFlyKeyDown() && !Minecraft.getInstance().isPaused() && engineTicker <= 0) {
             tag.putByte(TICKER, (byte) 5);
-            if (!enabled) {
-                tag.putBoolean(TAG_GRAVITATION, true);
-                player.getAbilities().mayfly = true;
-                gravitation = true;
-                if (levitation)
-                    player.getAbilities().flying = true;
-                if (server)
-                    player.displayClientMessage(Helpers.formatComplexMessage(ChatFormatting.AQUA, "message.text.gravitation", ChatFormatting.GREEN, "message.text.on"), false);
-            } else {
-                tag.putBoolean(TAG_GRAVITATION, false);
-                player.getAbilities().mayfly = false;
-                player.getAbilities().flying = false;
-                gravitation = false;
-                if (server) {
-                    player.displayClientMessage(Helpers.formatComplexMessage(ChatFormatting.AQUA, "message.text.gravitation", ChatFormatting.RED, "message.text.off"), false);
-                }
-            }
+            changeStatus(stack, player);
         } else {
             if (server) {
                 int accellerationTicker = player.getPersistentData().getInt("SpecialMovementTicker");
@@ -194,6 +178,31 @@ public class ItemAdvancedOmniArmor extends ItemBaseElectricArmor implements IPro
                         }
                     }
                 }
+            }
+        }
+    }
+
+    public static void changeStatus(ItemStack stack, Player player) {
+        CompoundTag tag = Helpers.getCompoundTag(stack);
+        if (!tag.getBoolean(TAG_GRAVITATION)) {
+            tag.putBoolean(TAG_GRAVITATION, true);
+            gravitation = true;
+            player.getAbilities().mayfly = true;
+            if (levitation) {
+                player.getAbilities().flying = true;
+            }
+            if (!player.level.isClientSide()) {
+                player.displayClientMessage(Helpers.formatComplexMessage(ChatFormatting.AQUA, "message.text.gravitation", ChatFormatting.GREEN, "message.text.on"), false);
+            }
+        } else {
+            tag.putBoolean(TAG_GRAVITATION, false);
+            gravitation = false;
+            if (!player.isCreative()) {
+                player.getAbilities().mayfly = false;
+                player.getAbilities().flying = false;
+            }
+            if (!player.level.isClientSide()) {
+                player.displayClientMessage(Helpers.formatComplexMessage(ChatFormatting.AQUA, "message.text.gravitation", ChatFormatting.RED, "message.text.off"), false);
             }
         }
     }

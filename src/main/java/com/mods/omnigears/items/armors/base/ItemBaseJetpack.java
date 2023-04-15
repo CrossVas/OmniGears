@@ -3,6 +3,9 @@ package com.mods.omnigears.items.armors.base;
 import cofh.lib.api.item.IEnergyContainerItem;
 import com.mods.omnigears.client.keyboard.KeyboardHandler;
 import com.mods.omnigears.Helpers;
+import com.mods.omnigears.items.armors.intefaces.IBoostProvider;
+import com.mods.omnigears.items.armors.intefaces.IEnergyProvider;
+import com.mods.omnigears.items.armors.intefaces.IOverlayProvider;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
@@ -20,7 +23,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class ItemBaseJetpack extends ItemBaseElectricArmor implements IEnergyPack, IBoostProvider {
+public class ItemBaseJetpack extends ItemBaseElectricArmor implements IEnergyProvider, IBoostProvider, IOverlayProvider {
 
     public int usage;
     public static boolean lastUsed;

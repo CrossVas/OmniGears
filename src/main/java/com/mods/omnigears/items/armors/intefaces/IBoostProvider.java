@@ -1,4 +1,4 @@
-package com.mods.omnigears.items.armors.base;
+package com.mods.omnigears.items.armors.intefaces;
 
 import net.minecraft.world.item.ItemStack;
 
