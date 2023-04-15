@@ -40,10 +40,9 @@ public class OmniRecipe extends WrappedOmniRecipe {
             return output;
         }
 
-        for (ItemStack input : tagInputs) {
-            CompoundTag energyTag = input.getTag();
-            output.setTag(energyTag);
-        }
+        tagInputs.forEach(input -> {
+            output.setTag(input.getTag());
+        });
 
         return output;
     }

@@ -8,19 +8,28 @@
   ],
   "key": {
     "#": {
-      "tag": "forge:ingots/steel"
+      "item": "omnigears:omnitool_core"
+    },
+    "O": {
+      "tag": "forge:ingots/osmium"
+    },
+    "D": {
+      "item": "omnigears:energized_diamond"
     },
     "C": {
-      "tag": "forge:circuits/basic"
+      "item": "omnigears:redstone_carbon_plate"
     },
-    "B": {
-      "item": "omnigears:omni_battery"
+    "S": {
+      "item": "mekanism:hdpe_sheet"
+    },
+    "L": {
+      "item": "mekanism:laser_amplifier"
     }
   },
   "pattern": [
-    " # ",
-    "#C#",
-    "#B#"
+    "ODO",
+    "C#C",
+    "SLS"
   ],
   "result": {
     "item": "omnigears:omnitool"
