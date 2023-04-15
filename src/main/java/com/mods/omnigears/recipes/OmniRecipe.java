@@ -2,7 +2,6 @@ package com.mods.omnigears.recipes;
 
 import com.google.gson.JsonObject;
 import com.mods.omnigears.OmniGears;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;

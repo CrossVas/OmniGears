@@ -12,8 +12,8 @@ public class OmniConfig {
 
     static {
         BUILDER.push(Refs.ID);
-        SHOW_HUD = BUILDER.comment("Show GraviSuite overlay.").define("overlay_enabled", true);
-        HUD_POS = BUILDER.comment("GraviSuite Armor Stats Display Position. 1 - Top Left, 2 - Top Right, 3 - Bottom Left, 4 - Bottom Right").defineInRange("overlay_position", 1, 1, 4);
+        SHOW_HUD = BUILDER.comment("Show OmniGears overlay.").define("overlay_enabled", true);
+        HUD_POS = BUILDER.comment("OmniGears Armor Stats Display Position. 1 - Top Left, 2 - Top Right, 3 - Bottom Left, 4 - Bottom Right").defineInRange("overlay_position", 1, 1, 4);
         BUILDER.pop();
         SPEC = BUILDER.build();
     }
