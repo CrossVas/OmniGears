@@ -46,7 +46,7 @@ public class OmniOverlay implements IGuiOverlay {
             /** ENERGY STATUS GENERAL */
 
             String energyStatus = "message.text.energy";
-            Component energyToDisplay = Helpers.formatComplexMessage(ChatFormatting.YELLOW, energyStatus, getEnergyTextColor(chargeLevel), chargeLevel + "%");
+            Component energyToDisplay = Helpers.formatComplexMessage(ChatFormatting.WHITE, energyStatus, getEnergyTextColor(chargeLevel), chargeLevel + "%");
 
             // Hover Start
 
