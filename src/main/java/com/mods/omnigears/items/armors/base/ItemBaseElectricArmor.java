@@ -5,6 +5,7 @@ import cofh.lib.energy.EnergyContainerItemWrapper;
 import cofh.lib.util.helpers.StringHelper;
 import com.mods.omnigears.Helpers;
 import com.mods.omnigears.OmniGears;
+import com.mods.omnigears.client.keyboard.KeyboardHandler;
 import com.mods.omnigears.items.armors.intefaces.IEnergyProvider;
 import com.mods.omnigears.items.armors.intefaces.IOverlayProvider;
 import com.mods.omnigears.items.armors.intefaces.IProtectionProvider;
@@ -35,6 +36,9 @@ public class ItemBaseElectricArmor extends ArmorItem implements IEnergyContainer
     public byte ticker, tickRate = 10;
     public int energyPerDamage = 250;
 
+    public static final String TAG_CHARGER = "charger";
+    public static final String TAG_TOGGLE_TICKER = "toggleTicker";
+
     public ItemBaseElectricArmor(String id, EquipmentSlot slot, int capacity, int transfer, Rarity rarity) {
         super(new ArmorMaterialOmni(id), slot, new Item.Properties().stacksTo(1).setNoRepair().tab(OmniGears.TAB).rarity(rarity));
         this.capacity = capacity;
@@ -50,7 +54,35 @@ public class ItemBaseElectricArmor extends ArmorItem implements IEnergyContainer
 
     @Override
     public void onArmorTick(ItemStack stack, Level level, Player player) {
-        if (!level.isClientSide()) {
+
+        CompoundTag tag = Helpers.getCompoundTag(stack);
+        boolean charger = tag.getBoolean(TAG_CHARGER);
+        byte ticker = tag.getByte(TAG_TOGGLE_TICKER);
+        Component message;
+
+        if (stack.getItem() instanceof IEnergyProvider energyProvider && KeyboardHandler.isChargerKeyDown() && ticker <= 0) {
+            if (energyProvider.canProvideEnergy(stack)) {
+                ticker = 10;
+                tag.putByte(TAG_TOGGLE_TICKER, ticker);
+                if (!charger) {
+                    tag.putBoolean(TAG_CHARGER, true);
+                    message = Helpers.formatComplexMessage(ChatFormatting.YELLOW, "message.text.charger", ChatFormatting.GREEN, "message.text.on");
+                } else {
+                    tag.putBoolean(TAG_CHARGER, false);
+                    message = Helpers.formatComplexMessage(ChatFormatting.YELLOW, "message.text.charger", ChatFormatting.RED, "message.text.off");
+                }
+                if (!player.level.isClientSide()) {
+                    player.displayClientMessage(message, false);
+                }
+            }
+        }
+
+        if (ticker > 0) {
+            --ticker;
+            tag.putByte(TAG_TOGGLE_TICKER, ticker);
+        }
+
+        if (!level.isClientSide() && charger) {
             if (player.getItemBySlot(EquipmentSlot.CHEST) == stack) {
                 int extract = this.getExtract(stack);
                 for (ItemStack item : player.getInventory().items) {
@@ -61,6 +93,11 @@ public class ItemBaseElectricArmor extends ArmorItem implements IEnergyContainer
                 }
             }
         }
+    }
+
+    public static boolean isChargingMode(ItemStack stack) {
+        CompoundTag tag = Helpers.getCompoundTag(stack);
+        return tag.getBoolean(TAG_CHARGER);
     }
 
     public boolean hasEnergy(ItemStack stack, int amount) {

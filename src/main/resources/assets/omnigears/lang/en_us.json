@@ -2,6 +2,7 @@
   "itemGroup.omnigears": "Omni Gears",
   "key.mode_switch.name": "Mode Switch Key",
   "key.toggle.name": "Fly Toggle Key",
+  "key.charger_toggle.name": "Charger Toggle Key",
   "key.alt.name": "Alt Key",
   "key.boost.name": "Boost Key",
 
@@ -63,6 +64,8 @@
   "message.text.jetpack.engine": "Jetpack Engine: ",
   "message.text.jetpack.hover": "Hover Mode: ",
   "message.text.energy": "Energy Level: ",
+  "message.text.charger": "Charger Mode: ",
+  "message.text.charger.short": "Charging",
 
   "message.text.levitation": "Levitation: ",
   "message.text.gravitation": "Anti-Gravity Engine: "

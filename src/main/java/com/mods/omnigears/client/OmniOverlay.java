@@ -5,7 +5,9 @@ import com.mods.omnigears.Helpers;
 import com.mods.omnigears.OmniConfig;
 import com.mods.omnigears.items.armors.ItemAdvancedOmniArmor;
 import com.mods.omnigears.items.armors.ItemBaseEnergyPack;
+import com.mods.omnigears.items.armors.base.ItemBaseElectricArmor;
 import com.mods.omnigears.items.armors.base.ItemBaseJetpack;
+import com.mods.omnigears.items.armors.intefaces.IEnergyProvider;
 import com.mods.omnigears.items.armors.intefaces.IOverlayProvider;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -45,8 +47,17 @@ public class OmniOverlay implements IGuiOverlay {
 
             /** ENERGY STATUS GENERAL */
 
+            Component charger = Helpers.formatColor("", ChatFormatting.GRAY);
+            if (armorItem instanceof IEnergyProvider energyProvider) {
+                boolean isCharging = ItemBaseElectricArmor.isChargingMode(armorStack);
+                String chargerStatus = "message.text.charger.short";
+                ChatFormatting chargerColor = isCharging ? ChatFormatting.GREEN : ChatFormatting.RED;
+                if (energyProvider.canProvideEnergy(armorStack)) {
+                    charger = Helpers.formatColor(" - ", ChatFormatting.GRAY).append(Helpers.formatSimpleMessage(chargerColor, chargerStatus));
+                }
+            }
             String energyStatus = "message.text.energy";
-            Component energyToDisplay = Helpers.formatComplexMessage(ChatFormatting.WHITE, energyStatus, getEnergyTextColor(chargeLevel), chargeLevel + "%");
+            Component energyToDisplay = Helpers.formatComplexMessage(ChatFormatting.WHITE, energyStatus, getEnergyTextColor(chargeLevel), chargeLevel + "%").append(charger);
 
             // Hover Start
 
@@ -58,7 +69,6 @@ public class OmniOverlay implements IGuiOverlay {
 
             String hoverString = "message.text.jetpack.hover";
             Component hoverToDisplay = Helpers.formatComplexMessage(ChatFormatting.AQUA, hoverString, hoverStatusColor, hoverStatus);
-            Component hover = Helpers.formatSimpleMessage(hoverStatusColor, hoverStatus);
 
             // Jetpack Engine Starts
 

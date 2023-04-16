@@ -18,9 +18,9 @@ public class KeyboardHandler {
         public static void onKeyRegister(RegisterKeyMappingsEvent e) {
             e.register(OmniKeys.MODE_KEY);
             e.register(OmniKeys.TOGGLE_KEY);
+            e.register(OmniKeys.CHARGER_TOGGLE_KEY);
             e.register(OmniKeys.ALT_KEY);
             e.register(OmniKeys.BOOST_KEY);
-
         }
     }
 
@@ -30,6 +30,9 @@ public class KeyboardHandler {
 
     public static boolean isFlyKeyDown() {
         return OmniKeys.TOGGLE_KEY.isDown();
+    }
+    public static boolean isChargerKeyDown() {
+        return OmniKeys.CHARGER_TOGGLE_KEY.isDown();
     }
 
     public static boolean isBoostKeyDown() {
