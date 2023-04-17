@@ -1,7 +1,10 @@
 package com.mods.omnigears.recipes;
 
+import cofh.lib.util.constants.NBTTags;
 import com.google.gson.JsonObject;
+import com.mods.omnigears.Helpers;
 import com.mods.omnigears.OmniGears;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
@@ -27,19 +30,20 @@ public class OmniRecipe extends WrappedOmniRecipe {
         }
 
         ItemStack output = getResultItem().copy();
-        List<ItemStack> tagInputs = new ArrayList<>();
+        List<ItemStack> energyContainers = new ArrayList<>();
         for (int i = 0; i < craftingContainer.getContainerSize(); i++) {
             ItemStack tagStack = craftingContainer.getItem(i);
-            if (!tagStack.isEmpty() && tagStack.hasTag()) {
-                tagInputs.add(tagStack);
+            CompoundTag inputTag = Helpers.getCompoundTag(tagStack);
+            if (inputTag.get(NBTTags.TAG_ENERGY) != null) {
+                energyContainers.add(tagStack);
             }
         }
 
-        if (tagInputs.isEmpty()) {
+        if (energyContainers.isEmpty()) {
             return output;
         }
 
-        tagInputs.forEach(input -> {
+        energyContainers.forEach(input -> {
             output.setTag(input.getTag());
         });
 

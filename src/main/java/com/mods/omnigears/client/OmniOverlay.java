@@ -51,9 +51,8 @@ public class OmniOverlay implements IGuiOverlay {
             if (armorItem instanceof IEnergyProvider energyProvider) {
                 boolean isCharging = ItemBaseElectricArmor.isChargingMode(armorStack);
                 String chargerStatus = "message.text.charger.short";
-                ChatFormatting chargerColor = isCharging ? ChatFormatting.GREEN : ChatFormatting.RED;
                 if (energyProvider.canProvideEnergy(armorStack)) {
-                    charger = Helpers.formatColor(" - ", ChatFormatting.GRAY).append(Helpers.formatSimpleMessage(chargerColor, chargerStatus));
+                    charger = Helpers.formatColor(" - ", ChatFormatting.GRAY).append(Helpers.formatSimpleMessage(statusColor(isCharging), chargerStatus));
                 }
             }
             String energyStatus = "message.text.energy";
@@ -62,46 +61,38 @@ public class OmniOverlay implements IGuiOverlay {
             // Hover Start
 
             boolean isHoverOn = ItemBaseJetpack.getHoverMode(armorStack);
-            String hoverStatus = isHoverOn ? "message.text.on" : "message.text.off";
-            ChatFormatting hoverStatusColor = isHoverOn ? ChatFormatting.GREEN : ChatFormatting.RED;
 
             /** HOVER STATUS GENERAL */
 
             String hoverString = "message.text.jetpack.hover";
-            Component hoverToDisplay = Helpers.formatComplexMessage(ChatFormatting.AQUA, hoverString, hoverStatusColor, hoverStatus);
+            Component hoverToDisplay = Helpers.formatComplexMessage(ChatFormatting.AQUA, hoverString, statusColor(isHoverOn), status(isHoverOn));
 
             // Jetpack Engine Starts
 
             boolean isEngineOn = ItemBaseJetpack.getEngineStatus(armorStack);
-            String engineStatus = isEngineOn ? "message.text.on" : "message.text.off";
-            ChatFormatting engineStatusColor = isEngineOn ? ChatFormatting.GREEN : ChatFormatting.RED;
 
             /** ENGINE STATUS GENERAL */
 
             String engineString = "message.text.jetpack.engine";
-            Component engineToDisplay = Helpers.formatComplexMessage(ChatFormatting.AQUA, engineString, engineStatusColor, engineStatus);
+            Component engineToDisplay = Helpers.formatComplexMessage(ChatFormatting.AQUA, engineString, statusColor(isEngineOn), status(isEngineOn));
 
             // Gravi Engine Starts
 
             boolean isGraviEngineOn = ItemAdvancedOmniArmor.getEngineStatus(armorStack);
-            String graviEngineStatus = isGraviEngineOn ? "message.text.on" : "message.text.off";
-            ChatFormatting graviEngineStatusColor = isGraviEngineOn ? ChatFormatting.GREEN : ChatFormatting.RED;
 
             /** GRAVI ENGINE STATUS GENERAL */
 
             String graviEngineString = "message.text.gravitation";
-            Component graviEngineToDisplay = Helpers.formatComplexMessage(ChatFormatting.AQUA, graviEngineString, graviEngineStatusColor, graviEngineStatus);
+            Component graviEngineToDisplay = Helpers.formatComplexMessage(ChatFormatting.AQUA, graviEngineString, statusColor(isGraviEngineOn), status(isGraviEngineOn));
 
             // Levitation starts
 
             boolean isLevitationOn = ItemAdvancedOmniArmor.getWorkStatus(armorStack);
-            String levitationStatus = isLevitationOn ? "message.text.on" : "message.text.off";
-            ChatFormatting levitationStatusColor = isLevitationOn ? ChatFormatting.GREEN : ChatFormatting.RED;
 
             /** Levitation STATUS GENERAL */
 
             String levitationString = "message.text.levitation";
-            Component levitationToDisplay = Helpers.formatComplexMessage(ChatFormatting.AQUA, levitationString, levitationStatusColor, levitationStatus);
+            Component levitationToDisplay = Helpers.formatComplexMessage(ChatFormatting.AQUA, levitationString, statusColor(isLevitationOn), status(isLevitationOn));
 
             switch (OmniConfig.HUD_POS.get()) {
                 case 1, 2 -> {
@@ -163,6 +154,14 @@ public class OmniOverlay implements IGuiOverlay {
             return ChatFormatting.DARK_RED;
         }
         return ChatFormatting.WHITE;
+    }
+
+    public String status(boolean condition) {
+        return condition ? "message.text.on" : "message.text.off";
+    }
+
+    public ChatFormatting statusColor(boolean condition) {
+        return condition ? ChatFormatting.GREEN : ChatFormatting.RED;
     }
 }
 
