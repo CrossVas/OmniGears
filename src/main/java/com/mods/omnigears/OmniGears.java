@@ -3,7 +3,6 @@ package com.mods.omnigears;
 import com.mods.omnigears.client.JetpackClientHandler;
 import com.mods.omnigears.client.OmniOverlay;
 import com.mods.omnigears.client.OmniSounds;
-import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -20,7 +19,6 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.RegisterEvent;
-import org.slf4j.Logger;
 
 import java.util.Objects;
 
@@ -28,7 +26,6 @@ import java.util.Objects;
 public class OmniGears {
 
     public static CreativeModeTab TAB = new OmniGearsTab();
-    public static final Logger LOGGER = LogUtils.getLogger();
 
     public OmniGears() {
         FMLJavaModLoadingContext.get().getModEventBus().register(this);
