@@ -3,6 +3,7 @@ package com.mods.omnigears.items;
 import cofh.core.item.EnergyContainerItem;
 import com.mods.omnigears.Helpers;
 import com.mods.omnigears.OmniGears;
+import com.mods.omnigears.items.armors.intefaces.IMergeCompoundTag;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
@@ -20,7 +21,7 @@ import java.util.List;
 import static cofh.lib.util.helpers.StringHelper.getScaledNumber;
 import static cofh.lib.util.helpers.StringHelper.localize;
 
-public class ItemBaseElectricItem extends EnergyContainerItem {
+public class ItemBaseElectricItem extends EnergyContainerItem implements IMergeCompoundTag {
 
     public ItemBaseElectricItem(int maxCapacity, int transfer) {
         super(new Properties().setNoRepair().tab(OmniGears.TAB).stacksTo(1), maxCapacity, transfer);

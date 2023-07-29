@@ -7,6 +7,7 @@ import com.mods.omnigears.Helpers;
 import com.mods.omnigears.OmniGears;
 import com.mods.omnigears.client.keyboard.KeyboardHandler;
 import com.mods.omnigears.items.armors.intefaces.IEnergyProvider;
+import com.mods.omnigears.items.armors.intefaces.IMergeCompoundTag;
 import com.mods.omnigears.items.armors.intefaces.IOverlayProvider;
 import com.mods.omnigears.items.armors.intefaces.IProtectionProvider;
 import net.minecraft.ChatFormatting;
@@ -30,7 +31,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class ItemBaseElectricArmor extends ArmorItem implements IEnergyContainerItem, IEnergyProvider, IProtectionProvider, IOverlayProvider {
+public class ItemBaseElectricArmor extends ArmorItem implements IEnergyContainerItem, IEnergyProvider, IProtectionProvider, IOverlayProvider, IMergeCompoundTag {
 
     public int capacity, transfer;
     public byte ticker, tickRate = 10;
@@ -54,7 +55,6 @@ public class ItemBaseElectricArmor extends ArmorItem implements IEnergyContainer
 
     @Override
     public void onArmorTick(ItemStack stack, Level level, Player player) {
-
         CompoundTag tag = Helpers.getCompoundTag(stack);
         boolean charger = tag.getBoolean(TAG_CHARGER);
         byte ticker = tag.getByte(TAG_TOGGLE_TICKER);

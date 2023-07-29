@@ -50,7 +50,7 @@ public class ItemArmorAdvanced extends ItemBaseElectricArmor {
         if (!level.isClientSide()) {
             if (ticker++ % tickRate == 0) {
                 if (player.isOnFire()) {
-                    if (hasEnergy(stack, this.energyForExtinguish) && hasFullSetArmor(player)) {
+                    if (hasEnergy(stack, this.energyForExtinguish) && isFullSet(player)) {
                         for (int i = 0; i < player.getInventory().items.size(); i++) {
                             player.getInventory().getItem(i);
                             ItemStack mainItem = player.getInventory().getItem(i).copy();
@@ -104,13 +104,9 @@ public class ItemArmorAdvanced extends ItemBaseElectricArmor {
         return 0;
     }
 
-    public boolean hasFullSetArmor(Player player) {
-        return Arrays.stream(player.getInventory().armor.toArray(new ItemStack[0])).allMatch(item -> item.getItem() instanceof ItemArmorAdvanced);
-    }
-
     @Override
     public boolean isFullSet(Player player) {
-        return hasFullSetArmor(player);
+        return Arrays.stream(player.getInventory().armor.toArray(new ItemStack[0])).allMatch(item -> item.getItem() instanceof ItemArmorAdvanced);
     }
 
     @Override
